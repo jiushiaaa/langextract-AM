@@ -2,7 +2,7 @@
 
 从高熵合金（HEA）领域学术 PDF 中抽取「成分–工艺–性能」结构化数据，输出 JSONL，供下游机器学习或知识库使用。
 
-基于 [LangExtract](https://github.com/google/langextract) + 多模型配置（星河社区 / Gemini），支持文本清洗、分块抽取、单块超时与解析失败重试。
+基于 [LangExtract](https://github.com/google/langextract) ,适配星河社区的所有模型及Gemini和openai等模型，支持文本清洗、分块抽取、单块超时与解析失败重试。
 
 ---
 
@@ -26,7 +26,7 @@ AM/
 ├── pdf_utils.py         # PDF 提文本、clean_and_truncate_text、chunk_text
 ├── schemas.py           # Pydantic 模型（Element / Property / Processing / MaterialEntity）
 │                        # + build_prompt_description、group_extractions_to_entities、entity_to_target_json
-├── .env                 # 本地 API Key（不提交到 Git）
+├── .env                 # 本地 API Key
 ├── AMpdf/               # 待处理 PDF，程序扫描该目录下 *.pdf
 ├── output/              # 输出 he_data_{model}.jsonl
 ├── requirements.txt     # 依赖
@@ -47,7 +47,7 @@ AM/
 ## 安装
 
 ```bash
-git clone <你的仓库地址>
+git clone https://github.com/jiushiaaa/langextract-AM.git
 cd AM
 pip install -r requirements.txt
 ```
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 ## 配置
 
-在项目根目录创建 `.env` 文件（不要提交到 Git）：
+在项目根目录创建 `.env` 文件：
 
 ```env
 # 星河社区（用于 ernie4 / ernie5 / deepseek / qwen / kimi）
@@ -109,17 +109,20 @@ python main.py --model ernie4 --max 2 --chunk 12000
 ## 常见问题与优化方向
 
 1. **403 访问过于频繁**  
-   星河 API 限流：保持 `--workers 1` 或改为 2，并适当增大 `--chunk` 减少请求次数。
+   星河社区 API 限流：保持 `--workers 1` 或改为 2，并适当增大 `--chunk` 减少请求次数。
 
 2. **某块一直卡在 “HTTP 200 OK” 之后**  
-   已加单块超时（默认 120 秒），超时会自动跳过该块并继续下一块；可在 `main.py` 中调整 `CHUNK_TIMEOUT`。
+   已加单块超时（默认 240 秒），超时会自动跳过该块并继续下一块；可在 `main.py` 中调整 `CHUNK_TIMEOUT`。ERNIE5 Thinking 推理慢，建议保持 240 或更大。
 
-3. **JSON 解析失败（Unterminated string 等）**  
-   单块会先切半重试；若仍失败则跳过该块并打日志，不影响其余块。
+3. **JSON 解析失败（Expecting value: line 1 column 1 / Unterminated string）**  
+   单块会先切半重试；若仍失败则跳过该块。**ERNIE 5.0 Thinking** 常在 JSON 前输出推理内容，易触发 “Expecting value”，属已知现象，可改用 ernie4 或增大 chunk 减少请求次数。
 
-4. **可优化方向（供同伴扩展）**  
+4. **Connection error / Server disconnected**  
+   网络或服务端断开时，该块会跳过并打简短日志，不打断整程；可稍后重跑或换网络。
+
+5. **可优化方向（供同伴扩展）**  
    - 增加更多 Few-shot 示例或细化 `schemas.py` 中 Field 的 description，提升抽取质量。  
-   - 对星河模型做简单请求频率限制（如 token bucket），避免 403。  
+   - 对星河社区内的模型做简单请求频率限制（如 token bucket），避免 403。  
    - 支持从本地 `langextract-main` 安装开发版：`pip install -e ./langextract-main`。  
    - 输出层增加去重、与已有 JSONL 的 merge 策略。  
    - 将 `CHUNK_TIMEOUT`、`MIN_CHUNK_RETRY` 等做成命令行或配置文件项。
@@ -136,7 +139,3 @@ python main.py --model ernie4 --max 2 --chunk 12000
 
 ---
 
-## 许可证与致谢
-
-- 本项目仅供内部/团队使用与二次开发。  
-- 依赖 [LangExtract](https://github.com/google/langextract)（Google）、星河社区 API；使用前请遵守各服务条款与用量限制。

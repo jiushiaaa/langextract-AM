@@ -63,8 +63,8 @@ AMPDF_DIR = ROOT / "AMpdf"
 OUTPUT_DIR = ROOT / "output"
 # 某块解析失败时，若块长大于此值则自动切半重试一次
 MIN_CHUNK_RETRY = 2000
-# 单块最大等待时间（秒），超时则跳过该块继续下一块，避免 200 OK 后解析卡死
-CHUNK_TIMEOUT = 120
+# 单块最大等待时间（秒），超时则跳过该块；ERNIE5 Thinking 很慢，建议 240+
+CHUNK_TIMEOUT = 240
 # 分块级并发线程数（1=串行便于排查卡住，2+ 可能触发限流）
 DEFAULT_CHUNK_WORKERS = 1
 # 多线程写入同一 JSONL 时使用的锁
@@ -312,6 +312,10 @@ def _process_one_chunk(
         log.warning("Chunk %s 降级重试仍失败: %s", label, e2)
     return (idx, [])
   except Exception as e:
+    err_msg = str(e)
+    if "Connection" in err_msg or "Connection error" in err_msg or "disconnected" in err_msg.lower():
+      log.warning("Chunk %s 网络/连接错误，跳过: %s", label, err_msg[:80])
+      return (idx, [])
     log.exception("Chunk %s 未预期错误: %s", label, e)
     return (idx, [])
 

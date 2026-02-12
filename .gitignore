@@ -22,12 +22,6 @@ build/
 .vscode/
 *.iml
 
-# 输出（可选：不把抽取结果提交到仓库）
-output/*.jsonl
-
-# 本地参考/子模块（体积大，可按需取消忽略）
-langextract-main/
-
 # 其他
 *.log
 .DS_Store

@@ -4,7 +4,7 @@
 
 支持模型（星河社区 OpenAI 兼容 API，除 gemini 外）：
   deepseek — DeepSeek V3          (Max Output 12k，max_tokens=8192)
-  ernie4   — ERNIE 4.5 Turbo 128k (Max Output 12k，强制 max_tokens=8192)
+  ernie4.5 — ERNIE 4.5 Turbo 128k (Max Output 12k，强制 max_tokens=8192)
   qwen     — Qwen3 Coder 30B       (Max Output 32k，max_tokens=16384)
   kimi     — Kimi K2 Instruct      (Max Output 32k，max_tokens=16384)
   ernie5   — ERNIE 5.0 Thinking   (max_tokens=8192)
@@ -49,7 +49,7 @@ def get_model_config(model_name: str) -> ModelProfile:
   根据名称返回模型配置。
 
   Args:
-    model_name: 'ernie5' | 'ernie4' | 'deepseek' | 'qwen' | 'kimi' | 'gemini'
+    model_name: 'ernie5' | 'ernie4.5' | 'deepseek' | 'qwen' | 'kimi' | 'gemini'
 
   Returns:
     ModelProfile 实例。
@@ -86,9 +86,9 @@ def get_model_config(model_name: str) -> ModelProfile:
     # Max Output 12k，设 8192 留安全余量
     return _openai_profile("deepseek-v3", 8192, "deepseek")
 
-  if model_name == "ernie4":
+  if model_name == "ernie4.5":
     # Max Output 12k，必须强制 8192（覆盖默认 2k）
-    return _openai_profile("ernie-4.5-turbo-128k-preview", 8192, "ernie4")
+    return _openai_profile("ernie-4.5-turbo-128k-preview", 8192, "ernie4.5")
 
   if model_name == "qwen":
     # Max Output 32k，设 16384 利用长输出、防长表格截断
@@ -122,5 +122,5 @@ def get_model_config(model_name: str) -> ModelProfile:
     )
 
   raise ValueError(
-      f"未知模型: {model_name!r}。支持: ernie5, ernie4, deepseek, qwen, kimi, gemini"
+      f"未知模型: {model_name!r}。支持: ernie5, ernie4.5, deepseek, qwen, kimi, gemini"
   )

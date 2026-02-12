@@ -3,7 +3,7 @@
 高熵合金论文抽取 Pipeline（基于 LangExtract）。
 
 用法：
-  python main.py                          # 默认 ernie4，处理全部 PDF
+  python main.py                          # 默认 ernie4.5，处理全部 PDF
   python main.py --model deepseek          # DeepSeek V3
   python main.py --model qwen              # Qwen3 Coder 30B
   python main.py --model kimi              # Kimi K2
@@ -46,6 +46,7 @@ from schemas import (
     build_prompt_description,
     entity_to_target_json,
     group_extractions_to_entities,
+    MaterialRole,
 )
 
 logging.basicConfig(
@@ -397,8 +398,8 @@ def process_one_pdf(
   entities, evidence = group_extractions_to_entities(all_extractions)
   log.info("        识别出 %d 种材料", len(entities))
 
-  # ---- 4. 转目标 JSON 模板 ----
-  log.info("[4/4] 转目标 JSON")
+  # ---- 4. 转目标 JSON 模板（仅保留本文材料 role==Target） ----
+  log.info("[4/4] 转目标 JSON，过滤引用材料")
   records = []
   for entity in entities:
     rec = entity_to_target_json(
@@ -406,7 +407,11 @@ def process_one_pdf(
         source_pdf=pdf_path.name,
         evidence=evidence,
     )
-    records.append(rec)
+    role = rec.get("role", "Other")
+    if role == "Target":
+      records.append(rec)
+    else:
+      log.info("        跳过引用材料: %s", entity.material_name)
   return records
 
 
@@ -419,9 +424,9 @@ def main():
       description="高熵合金论文结构化抽取 Pipeline (LangExtract)",
   )
   parser.add_argument(
-      "--model", default="ernie4",
-      choices=["ernie5", "ernie4", "deepseek", "qwen", "kimi", "gemini"],
-      help="选择模型 (default: ernie4)",
+      "--model", default="ernie4.5",
+      choices=["ernie5", "ernie4.5", "deepseek", "qwen", "kimi", "gemini"],
+      help="选择模型 (default: ernie4.5)",
   )
   parser.add_argument(
       "--max", type=int, default=0, dest="max_pdfs",

@@ -59,7 +59,7 @@ pip install -r requirements.txt
 在项目根目录创建 `.env` 文件：
 
 ```env
-# 星河社区（用于 ernie4 / ernie5 / deepseek / qwen / kimi）
+# 星河社区（用于 ernie4.5/ ernie5 / deepseek / qwen / kimi）
 AI_STUDIO_API_KEY=你的星河API密钥
 
 # 仅在使用 --model gemini 时需要
@@ -91,7 +91,7 @@ python main.py --model ernie4 --max 2 --chunk 12000
 
 | 参数 | 默认 | 说明 |
 |------|------|------|
-| `--model` | ernie4 | 模型：ernie5, ernie4, deepseek, qwen, kimi, gemini |
+| `--model` | ernie4.5 | 模型：ernie5, ernie4.5, deepseek, qwen, kimi, gemini |
 | `--max` | 0 | 最多处理 PDF 数量，0 表示全部 |
 | `--chunk` | 6000 | 分块大小（字符），单块失败会切半重试 |
 | `--workers` | 1 | 分块并发数，1 为串行（便于排查卡住） |
@@ -115,7 +115,7 @@ python main.py --model ernie4 --max 2 --chunk 12000
    已加单块超时（默认 240 秒），超时会自动跳过该块并继续下一块；可在 `main.py` 中调整 `CHUNK_TIMEOUT`。ERNIE5 Thinking 推理慢，建议保持 240 或更大。
 
 3. **JSON 解析失败（Expecting value: line 1 column 1 / Unterminated string）**  
-   单块会先切半重试；若仍失败则跳过该块。**ERNIE 5.0 Thinking** 常在 JSON 前输出推理内容，易触发 “Expecting value”，属已知现象，可改用 ernie4 或增大 chunk 减少请求次数。
+   单块会先切半重试；若仍失败则跳过该块。**ERNIE 5.0 Thinking** 常在 JSON 前输出推理内容，易触发 “Expecting value”，属已知现象，可改用 ernie4.5 或增大 chunk 减少请求次数。
 
 4. **Connection error / Server disconnected**  
    网络或服务端断开时，该块会跳过并打简短日志，不打断整程；可稍后重跑或换网络。

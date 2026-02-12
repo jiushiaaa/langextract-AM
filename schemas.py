@@ -13,9 +13,21 @@ from __future__ import annotations
 
 import json
 import re
+from enum import Enum
 from typing import Any, Optional
 
 from pydantic import BaseModel, Field
+
+
+# ============================================================
+# 0. 材料角色枚举（去噪过滤用）
+# ============================================================
+
+class MaterialRole(str, Enum):
+  """材料在文中的角色，用于过滤仅保留本文研究材料。"""
+  TARGET = "Target"      # 本文作者亲自制备和研究的主要材料
+  REFERENCE = "Reference"  # 仅用于对比的参考文献材料
+  OTHER = "Other"        # 其他不明确
 
 
 # ============================================================
@@ -72,6 +84,10 @@ class Processing(BaseModel):
       None,
       description="热处理条件描述 (e.g., 'Annealed at 1100C for 2h').",
   )
+  details: Optional[str] = Field(
+      None,
+      description="其他关键工艺参数 (e.g., power, speed, layer thickness)，供 Process_Text_For_AI。",
+  )
 
 
 # ============================================================
@@ -80,14 +96,6 @@ class Processing(BaseModel):
 
 class MaterialEntity(BaseModel):
   """一种材料的完整记录。"""
-  # 思维链缓存 —— 引导 ERNIE 5.0 先分析再输出
-  analysis_thought: Optional[str] = Field(
-      None,
-      description=(
-          "请先简要分析这段文本中包含了几种材料，以及它们的关键特征，"
-          "然后再填充后续字段。"
-      ),
-  )
   material_name: str = Field(
       ...,
       description="文中使用的材料标识符 (e.g., 'RHEA-1', 'Sample A', 'T42').",
@@ -107,6 +115,17 @@ class MaterialEntity(BaseModel):
   properties: list[Property] = Field(
       default_factory=list,
       description="该材料对应的所有力学性能数据。",
+  )
+  microstructure: Optional[str] = Field(
+      None,
+      description="微观组织描述 (e.g., 晶粒、析出相)，对应 Microstructure_Text_For_AI；暂无则留空。",
+  )
+  role: str = Field(
+      default=MaterialRole.OTHER.value,
+      description=(
+          "判断该材料在文中的角色。'Target' 表示本文作者亲自制备和研究的主要材料；"
+          "'Reference' 表示仅用于对比的参考文献材料；'Other' 表示其他。"
+      ),
   )
 
 
@@ -147,6 +166,8 @@ Extraction classes and required attributes:
                          """ + Element.model_fields["is_balance"].description + """
                          If balance, set value to -1.
      unit              — """ + Element.model_fields["unit"].description + """
+     role              — """ + MaterialEntity.model_fields["role"].description + """
+                         Must be exactly one of: Target, Reference, Other.
 
 2. "process" — Fabrication / processing method.
    Attributes:
@@ -242,13 +263,17 @@ def group_extractions_to_entities(
 
   entities: list[MaterialEntity] = []
   for mid, g in groups.items():
-    # --- composition ---
+    # --- composition (含 role) ---
     formula = ""
     elements: list[Element] = []
     unit = "at.%"
+    role_val = MaterialRole.OTHER.value
     for c in g["compositions"]:
       formula = c.get("formula", formula)
       unit = c.get("unit", unit)
+      r = c.get("role", "").strip()
+      if r in (MaterialRole.TARGET.value, MaterialRole.REFERENCE.value, MaterialRole.OTHER.value):
+        role_val = r
       elems = _parse_elements_json(c.get("elements_json", "{}"))
       if elems:
         elements = elems
@@ -268,9 +293,11 @@ def group_extractions_to_entities(
       if det:
         details_parts.append(det)
 
+    details_joined = " ".join(details_parts).strip() if details_parts else None
     proc = Processing(
         method=method or "Unknown",
         heat_treatment=heat_treatment,
+        details=details_joined,
     )
 
     # --- properties ---
@@ -293,6 +320,7 @@ def group_extractions_to_entities(
         composition=elements,
         process=proc,
         properties=props,
+        role=role_val,
     )
     entities.append(entity)
 
@@ -303,20 +331,20 @@ def group_extractions_to_entities(
 # 6. MaterialEntity → 用户目标 JSON 模板
 # ============================================================
 
-def _temperature_to_kelvin(temp_str: str | None) -> int:
-  """'298 K' / '600C' / 'Room Temperature' → 数值 (K)。"""
+def _parse_temp_to_k(temp_str: str | None) -> float:
+  """温度字符串转开尔文: RT/room->298, 1000C->1273.15, 298K->298。"""
   if not temp_str:
-    return 298
+    return 298.0
   t = temp_str.lower().strip()
-  if "room" in t or t == "rt":
-    return 298
+  if "rt" in t or "room" in t:
+    return 298.0
   nums = re.findall(r"[\d.]+", temp_str)
   if not nums:
-    return 298
+    return 298.0
   val = float(nums[0])
-  if "c" in t and "k" not in t:
-    return int(val + 273)
-  return int(val)
+  if "k" in t and "c" not in t:
+    return val
+  return val + 273.15  # 默认按摄氏度
 
 
 def entity_to_target_json(
@@ -324,51 +352,64 @@ def entity_to_target_json(
     source_pdf: str,
     evidence: list[EvidenceSpan] | None = None,
 ) -> dict[str, Any]:
-  """MaterialEntity → Composition_Info / Process_Info / Properties_Info 目标模板。"""
-  mid = entity.material_name
-  sid = f"S_{mid}_AsBuilt"
-  elements_dict = {}
-  for e in entity.composition:
-    elements_dict[e.symbol] = -1 if e.is_balance else e.value
+  """
+  将 MaterialEntity 转为甲方严格 JSON 模板。
+  一级 Key: Composition_Info, Process_Info, Properties_Info。
+  Composition_JSON / Key_Params_JSON 使用 json.dumps(..., ensure_ascii=False) 生成转义字符串。
+  """
+  safe_name = re.sub(r"[^a-zA-Z0-9]", "", entity.material_name)[:15] or "Unknown"
+  mat_id = f"M_{safe_name}"
+  sample_id = f"S_{safe_name}_AsBuilt"
+
+  comp_dict = {
+      e.symbol: (-1 if e.is_balance else e.value)
+      for e in entity.composition
+  }
 
   composition_info = {
-      "Mat_ID": f"M_{mid}",
-      "Alloy_Name_Raw": mid,
+      "Mat_ID": mat_id,
+      "Alloy_Name_Raw": entity.material_name,
       "Formula_Normalized": entity.formula,
-      "Composition_JSON": json.dumps(elements_dict, ensure_ascii=False),
-      "Source_DOI": "",
+      "Composition_JSON": json.dumps(comp_dict, ensure_ascii=False),
+      "Source_DOI": source_pdf,
   }
 
   process_info = {
-      "Sample_ID": sid,
-      "Mat_ID": f"M_{mid}",
-      "Process_Category": entity.process.method,
-      "Process_Text_For_AI": entity.process.heat_treatment or "",
+      "Sample_ID": sample_id,
+      "Mat_ID": mat_id,
+      "Process_Category": entity.process.method or "Unknown",
+      "Process_Text_For_AI": entity.process.details or entity.process.heat_treatment or entity.process.method or "",
       "Key_Params_JSON": "{}",
       "Main_Phase": "",
-      "Microstructure_Text_For_AI": "",
+      "Microstructure_Text_For_AI": entity.microstructure or "",
       "Has_Precipitates": False,
       "Grain_Size_avg_um": None,
   }
 
-  properties_info = []
-  for i, prop in enumerate(entity.properties, start=1):
-    properties_info.append({
-        "Test_ID": f"T_{mid}_{i:02d}",
-        "Sample_ID": sid,
-        "Test_Temperature_K": _temperature_to_kelvin(prop.test_temperature),
-        "Property_Type": prop.property_type,
-        "Property_Value": prop.value,
-        "Property_Unit": prop.unit,
+  props: list[dict[str, Any]] = []
+  for i, p in enumerate(entity.properties, 1):
+    props.append({
+        "Test_ID": f"T_{safe_name}_{i:02d}",
+        "Sample_ID": sample_id,
+        "Test_Temperature_K": _parse_temp_to_k(p.test_temperature),
+        "Property_Type": p.property_type,
+        "Property_Value": p.value,
+        "Property_Unit": p.unit,
     })
 
   result: dict[str, Any] = {
       "_source_pdf": source_pdf,
+      "role": getattr(entity, "role", MaterialRole.OTHER.value),
       "Composition_Info": composition_info,
       "Process_Info": process_info,
-      "Properties_Info": properties_info,
+      "Properties_Info": props,
   }
   if evidence:
     result["_evidence"] = [e.model_dump() for e in evidence]
 
   return result
+
+
+def material_entity_to_target_json(entity: MaterialEntity, pdf_name: str) -> dict[str, Any]:
+  """兼容接口：仅根据实体与 PDF 名称返回甲方 JSON 结构。"""
+  return entity_to_target_json(entity=entity, source_pdf=pdf_name, evidence=None)

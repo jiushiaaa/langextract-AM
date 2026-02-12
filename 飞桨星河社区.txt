@@ -1,0 +1,1145 @@
+
+开放能力
+开发平台
+文心大模型
+场景应用
+客户案例
+开发与生态
+资讯
+文档
+控制台
+登录
+AI Studio
+搜索本产品文档内容
+
+快速开始
+社区功能
+项目开发
+应用开发
+快速开始
+应用
+零代码应用
+高代码应用
+ComfyUI Custom API
+大模型API
+LLM_API
+工具
+部署
+最佳实践
+模型开发
+数据集
+学习中心
+PaddleOCR专区
+帮助文档
+>
+AI Studio
+大模型 API
+1. 准备
+1.1 访问令牌
+1.2 Tokens
+1.3 服务域名
+2. 模型列表与查询
+2.1 文生文模型列表
+2.2 深度思考模型列表
+2.3 多模态模型列表
+2.4 向量模型列表
+2.5 文生图模型
+2.6 功能特性支持
+2.7 模型列表查询
+3. 安装依赖库
+4. 模型基础能力用法
+4.1 文生文
+4.1.1 模型调用
+4.1.2 请求参数说明
+4.1.3 响应参数说明
+4.2 文生图
+4.2.1 模型调用
+4.2.2 请求参数说明
+4.2.3 模型响应参数
+4.3 向量
+4.3.1 模型调用
+4.3.2 请求参数说明
+4.3.3 返回参数说明
+5.模型扩展能力用法
+5.1 多轮对话
+5.2 流式输出
+5.3 异步调用
+5.4 搜索增强
+5.5 结构化输出
+5.6 Function calling
+5.7 打印思维链（深度思考模型）
+5.8 多模态
+5.8.1 多模态-文字输入
+5.8.2 多模态-文字输入-流式
+5.8.3 多模态-图片输入(url)-流式
+5.8.4 多模态-图片输入(base64)-流式
+5.8.5 多模态-图片+文本输入-流式
+5.8.6 多模态-视频理解--流式
+6. API Code 错误码
+大模型API
+更新时间：2025-11-25
+大模型 API
+星河大模型 API 是为开发者提供的一套基础的大模型 API 服务，背靠百度智能云千帆平台，提供文心等大模型能力。该大模型 API 服务兼容 openai-python SDK，开发者可以直接使用原生的 openai-python SDK来调用文心等大模型服务。
+
+现在加入官方免费教学课程 《大模型API服务：从大模型服务调用到应用实战》 ，2分钟轻松上手，玩转大模型。
+
+1. 准备
+1.1 访问令牌
+访问令牌用于 AI Studio 用户进行身份验证，可通过访问令牌向 AI Studio 执行授权范围（如大模型 API 的调用权限，仓库相关的读取访问权限等）指定的特定操作。可前往个人中心的 访问令牌页面 查看个人专属 access token。
+
+1.2 Tokens
+Tokens 为星河社区上调用大模型SDK或使用大模型应用的最终计量单位，星河为每个开发者提供了100万的免费 Tokens 额度。开发者使用不同的模型会扣除不同数量的Tokens，Token 收支明细可查看使用明细。若Tokens 已消耗完，可购买 Tokens 后再使用。
+
+1.3 服务域名
+用星河大模型 API 服务的域名地址: https://aistudio.baidu.com/llm/lmapi/v3
+
+在使用 openai-python 调用星河大模型 API 服务时，需要将
+
+指定 api_key = "令牌(Access Token)"
+指定 base_url = "https://aistudio.baidu.com/llm/lmapi/v3"
+
+2. 模型列表与查询
+2.1 文生文模型列表
+模型名称	model 参数值	上下文长度(token)	最大输入(token)	最大输出
+token)
+ERNIE 4.5	ernie-4.5-turbo-128k-preview	128k	123k	[2，12288]
+默认 2k
+ERNIE 4.5	ernie-4.5-21b-a3b	128k	120k	[2，12288]
+默认 2k
+ERNIE 4.5	ernie-4.5-0.3b	128k	120k	[2，12288]
+默认 2k
+DeepSeek-Chat	deepseek-v3	128k	128k	[2，12288]
+默认 2k
+ERNIE 4.0	ernie-4.0-8k	8k	5k	[2，2048]
+默认 2k
+ERNIE 4.0 Turbo	ernie-4.0-turbo-128k	128k	124k	[2，4096]
+默认 4k
+ERNIE 4.0 Turbo	ernie-4.0-turbo-8k	8k	5k	[2，2048]
+默认 2k
+ERNIE 3.5	ernie-3.5-8k	8k	5k	[2，2048]
+默认 2k
+ERNIE Character	ernie-char-8k	8k	7k	[2，2048]
+默认 1k
+ERNIE Speed	ernie-speed-8k	8k	6k	[2，2048]
+默认 1k
+ERNIE Speed	ernie-speed-128k	128k	124k	[2，4096]
+默认 4k
+ERNIE Tiny	ernie-tiny-8k	8k	6k	[2，2048]
+默认 1k
+ERNIE Lite	ernie-lite-8k	8k	6k	[2，2048]
+默认 1k
+Kimi-K2	kimi-k2-instruct	128k	128k	[1，32768]
+默认 4k
+Qwen3-Coder	qwen3-coder-30b-a3b-instruct	128k	128k	[1，32768]
+默认 4k
+
+2.2 深度思考模型列表
+模型名称	model 参数值	上下文长度(token)	最大输入(token)	最大输出
+token)	思维链长度
+(token)
+ERNIE 5.0 Thinking Preview	ernie-5.0-thinking-preview	128k	119k	[1，65536]	60k
+ERNIE 4.5	ernie-4.5-21b-a3b-thinking	128k	96k	[1，32768]默认 4k	32k
+ERNIE X1.1 preview	ernie-x1.1-preview	64k	55k	[1，65536]	64k
+ERNIE 4.5	ernie-4.5-turbo-vl	128k	123k	[2，12288]
+默认 2k	16k
+ERNIE 4.5	ernie-4.5-vl-28b-a3b	128k	123k	[2，12288]
+默认 2k	16k
+ERNIE X1 Turbo	ernie-x1-turbo-32k	32k	24k	[2，16384]
+默认 2k	16k
+DeepSeek-Reasoner	deepseek-r1-250528	96k	64k	16k
+默认 4k	32k
+DeepSeek-Reasoner	deepseek-r1	96k	64k	16k
+默认 4k	32k
+
+2.3 多模态模型列表
+多模态模型使用方式请查看本文5.8节。（2025/6/30新增：视频理解调用示例，5.8.6节）
+
+模型名称	model 参数值	支持模态	上下文长度(token)	最大输入(token)	最大输出
+token)
+ERNIE 4.5 VL	ernie-4.5-vl-28b-a3b-thinking	文本、图像、视频	128K	123K	[2，12288]
+ERNIE 4.5 Turbo VL	ernie-4.5-turbo-vl	文本、图像、视频	128K	123K	[2，12288]
+ERNIE 4.5 VL	ernie-4.5-vl-28b-a3b	文本、图像、视频	128k	123K	[2，12288]
+ERNIE 4.5 Turbo VL	ernie-4.5-turbo-vl-32k	文本、图像	32k	30k	[[1，8192]
+默认 4k
+
+2.4 向量模型列表
+模型名称	model 入参	最大输入文本数量	每个文本上下文长度 (token)
+Embedding-V1	embedding-v1	1	384
+bge-large-zh	bge-large-zh	16	512
+
+2.5 文生图模型
+模型名	类型
+Stable-Diffusion-XL	文生图模型
+
+2.6 功能特性支持
+2025/6/30开源模型清单：
+
+模型名称	model 参数值	支持能力	支持模态
+ERNIE-4.5-VL-424B-A47B	ernie-4.5-turbo-vl	对话模型
+深度思考	文本
+图像
+视频
+ERNIE-4.5-300B-A47B	ernie-4.5-turbo-128k-preview	对话模型	文本
+ERNIE-4.5-VL-28B-A3B	ernie-4.5-vl-28b-a3b	对话模型
+深度思考	文本
+图像
+视频
+ERNIE-4.5-21B-A3B	ernie-4.5-21b-a3b	对话模型	文本
+ERNIE-4.5-0.3B	ernie-4.5-0.3b	对话模型	文本
+
+联网搜索(搜索增强)：
+
+ernie-5.0-thinking-preview
+ernie-x1.1-preview
+ernie-x1-turbo
+ernie-4.5
+ernie-4.5-turbo
+ernie-4.0
+ernie-4.0-turbo
+ernie-3.5
+deepseek-r1
+deepseek-v3
+function call：
+
+ernie-5.0-thinking-preview
+ernie-x1.1-preview
+ernie-x1-turbo
+deepseek-r1
+deepseek-v3
+结构化输出：
+
+ernie-4.5
+ernie-4.0-turbo
+ernie-3.5
+
+2.7 模型列表查询
+# 查询支持的模型列表
+
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+models = client.models.list()
+for model in models.data:
+    print(model.id)
+
+3. 安装依赖库
+# install from PyPI
+pip install openai
+
+4. 模型基础能力用法
+4.1 文生文
+4.1.1 模型调用
+import os
+from openai import OpenAI
+
+client = OpenAI(
+     api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+     base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {'role': 'system', 'content': '你是 AI Studio 实训AI开发平台的开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。'},
+        {'role': 'user', 'content': '你好，请介绍一下AI Studio'}
+    ],
+    model="ernie-3.5-8k",
+)
+
+print(chat_completion.choices[0].message.content)
+为了避免将api_key 暴露在代码中，可以使用 python-dotenv 将其添加AI_STUDIO_API_KEY="YOUR_ACCESS_TOKEN"到您的.env文件中。当然，也可以通过api_key="YOUR_ACCESS_TOKEN"直接指定
+
+4.1.2 请求参数说明
+body说明
+
+名称	类型	必填	描述	openai-python是否原生支持
+model	string	是	模型ID，可选值可从client.models.list() 获取	是
+messages	List	是	聊天上下文信息。说明：
+（1）messages成员不能为空，1个成员表示单轮对话，多个成员表示多轮对话，例如：
+1个成员示例，"messages": [ {"role": "user","content": "你好"}]
+3个成员示例，"messages": [ {"role": "user","content": "你好"},{"role":"assistant","content":"需要什么帮助"},{"role":"user","content":"自我介绍下"}]﻿
+（2） 最后一个message为当前请求的信息，前面的message为历史对话信息
+（3）messages的role说明：
+① 第一条message的role必须是user或system
+② 最后一条message的role必须是user或tool，如果是ERNIE 4.5或ERNIE-X1-32K-Preview，最后一条message的role必须是user
+③ 如果未使用function call功能：
+· 当第一条message的role为user，role值需要依次为user -> assistant -> user...，即奇数位message的role值必须为user或function，偶数位message的role值为assistant，例如：示例中message中的role值分别为user、assistant、user、assistant、user；奇数位（红框）message中的role值为user，即第1、3、5个message中的role值为user；偶数位（蓝框）值为assistant，即第2、4个message中的role值为assistant image.png
+· 当第一条message的role为system，role值需要依次为system -> user/function -> assistant -> user/function ...
+（4）message中的content总长度不能超过对应model的输入字符限制和输入tokens限制，请查看各模型上下文长度说明
+（5）如果为ERNIE 4.5，请参考以下：不支持连续的user/assistant以及首message为assistant的情况，具体规则如下：
+· messages成员不能为空，1个成员表示单轮对话，多个成员表示多轮对话；
+· 第一条message的role必须是user或system
+· 最后一条message的role必须是user
+· 除去第一个system的role后，role需要依次为user -> assistant -> user ...	是
+stream	bool	否	是否以流式接口的形式返回数据，说明：
+（1）beam search模型只能为false
+（2）默认false	是
+temperature	float	否	说明：
+（1）较高的数值会使输出更加随机，而较低的数值会使其更加集中和确定
+（2）默认0.95，范围 (0, 1.0]，不能为0
+（3）不支持以下模型：
+· deepSeek-v3
+· deepSeek-r1
+· ernie-x1-32k-preview	是
+top_p	float	否	说明：
+（1）影响输出文本的多样性，取值越大，生成文本的多样性越强
+（2）默认0.7，取值范围 [0, 1.0]
+（3）不支持以下模型：
+· deepSeek-v3
+· deepSeek-r1
+· ernie-x1-32k-preview	是
+penalty_score	float	否	通过对已生成的token增加惩罚，减少重复生成的现象。说明：
+（1）值越大表示惩罚越大
+（2）默认1.0，取值范围：[1.0, 2.0]
+（3）不支持以下模型：
+· deepSeek-v3
+· deepSeek-r1
+· ernie-x1-32k-preview	否
+max_completion_tokens	int	否	指定模型最大输出token数，说明：
+（1）取值范围[2, 2048]，模型具体支持请查看支持模型列表	是
+response_format	string	否	指定响应内容的格式，说明：
+（1）可选值：
+· json_object：以json格式返回，可能出现不满足效果情况
+· text：以文本格式返回
+（2）如果不填写参数response_format值，默认为text
+（3）不支持以下模型：ernie-x1-32k-preview	是
+seed	int	否	说明：
+（1）取值范围: （0,2147483647‌），会由模型随机生成，默认值为空
+（2）如果指定，系统将尽最大努力进行确定性采样，以便使用相同seed和参数的重复请求返回相同的结果
+（3）不支持以下模型：ernie-x1-32k-preview	是
+stop	List	否	生成停止标识，当模型生成结果以stop中某个元素结尾时，停止文本生成。说明：
+（1）每个元素长度不超过20字符
+（2）最多4个元素
+（3）不支持以下模型：ernie-x1-32k-preview	是
+frequency_penalty	float	否	说明：
+（1）正值根据迄今为止文本中的现有频率对新token进行惩罚，从而降低模型逐字重复同一行的可能性
+（2）取值范围：[-2.0, 2.0]
+（3）支持以下模型：
+ernie-speed-8k﻿、ernie-speed-128k﻿ 、ernie-tiny-8k﻿、ernie-char-8k、ernie-lite-8k	是
+presence_penalty	float	否	说明：
+（1）正值根据token记目前是否出现在文本中来对其进行惩罚，从而增加模型谈论新主题的可能性
+（2）取值范围：[-2.0, 2.0]
+（3）支持以下模型： ernie-speed-8k﻿、ernie-speed-128k﻿ 、ernie-tiny-8k﻿、ernie-char-8k、ernie-lite-8k	是
+tools	List(Tool)	否	一个可触发函数的描述列表，支持模型请参考本文支持模型列表-是否支持function call功能	是
+tool_choice	string / tool_choice	否	说明：
+（1）支持模型请参考本文支持模型列表-是否支持function call功能
+（2）string类型，可选值如下：
+· none：不希望模型调用任何function，只生成面向用户的文本消息
+· auto：模型会根据输入内容自动决定是否调用函数以及调用哪些function
+· required：希望模型总是调用一个或多个function
+（3）当为tool_choice类型，指在函数调用场景下，提示大模型选择指定的函数，指定的函数名必须在tools中存在	是
+parallel_tool_calls	bool	否	说明：
+（1）支持模型请参考本文支持模型列表-是否支持function call功能
+（2）可选值：
+· true：表示开启函数并行调用，默认开启
+· false：表示关闭函数并行调用	是
+web_search	web_search	否	搜索增强的选项，说明：
+（1）默认不传关闭
+（2）支持模型请查看上文模型列表说明	否
+message说明
+
+名称	类型	必填	描述
+role	string	是	当前支持以下：
+user: 表示用户
+assistant: 表示对话助手
+system：表示人设
+name	string	否	message名
+content	string	是	对话内容，说明：
+（1）不能为空
+（2）最后一个message对应的content不能为blank字符，如空格、"\n"、“\r”、“\f”等
+Tool中function说明
+
+Tool中function说明如下
+
+名称	类型	必填	描述
+name	string	是	函数名
+description	string	否	函数描述
+parameters	object	否	函数请求参数，JSON Schema 格式，参考JSON Schema描述
+tool_choice说明
+
+名称	类型	必填	描述
+type	string	是	指定工具类型，固定值function
+function	function	是	指定要使用的函数
+tool_choice中function说明
+
+名称	类型	必填	描述
+name	string	是	指定要使用的函数名
+web_search说明
+
+名称	类型	描述
+enable	bool	是否开启实时搜索功能，说明：
+（1）如果关闭实时搜索，角标和溯源信息都不会返回
+（2）可选值：
+· true：开启
+· false：关闭，默认false
+enable_citation	bool	是否开启上角标返回，说明：
+（1）enable为true时生效
+（2）可选值：
+· true：开启；如果开启，在触发了搜索增强的场景下，响应内容会附上角标，并带上角标对应的搜索溯源信息
+· false：未开启，默认false
+（3）如果检索内容包含非公开网页，角标不生效
+enable_trace	bool	是否返回搜索溯源信息，说明：
+（1）enable 为 true时生效。
+（2）可选值：
+· true：返回；如果为true，在触发了搜索增强的场景下，会返回搜索溯源信息search_results
+· false：不返回，默认false
+（3）如果检索内容为非公开网页，即使触发搜索也不返回溯源信息
+4.1.3 响应参数说明
+名称	类型	描述
+id	string	本次请求的唯一标识，可用于排查问题
+object	string	回包类型 chat.completion：多轮对话返回
+created	int	时间戳
+model	string	模型ID
+choices	object	说明：当请求参数stream值不同时，返回内容不同
+usage	usage	token统计信息，说明：
+（1）同步请求默认返回
+（2）会在最后一个chunk返回实际内容，其他chunk返回null
+choices说明
+
+名称	类型	描述
+index	int	choice列表中的序号
+message	message	响应信息，当stream=false时返回
+delta	delta	响应信息，当stream=true时返回
+finish_reason	string	输出内容标识，说明：
+normal：输出内容完全由大模型生成，未触发截断、替换
+stop：输出结果命中入参stop中指定的字段后被截断
+length：达到了最大的token数
+content_filter：输出内容被截断、兜底、替换为**等
+function_call：调用了function call功能
+flag	int	安全细分类型，说明：
+（1）当stream=false，flag值含义如下：
+0或不返回：安全
+1：低危不安全场景，可以继续对话
+2：禁聊：不允许继续对话，但是可以展示内容
+3：禁止上屏：不允许继续对话且不能上屏展示
+4：撤屏
+（2）当stream=true时，返回flag表示触发安全
+ban_round	int	当flag 不为 0 时，该字段会告知第几轮对话有敏感信息；如果是当前问题，ban_round = -1
+choices中message说明
+
+名称	类型	描述
+role	string	当前支持以下：
+· user: 表示用户
+· assistant: 表示对话助手
+· system：表示人设
+name	string	message名
+content	string	对话内容
+tool_calls	List[ToolCall]	函数调用，function call场景下第一轮对话的返回，第二轮对话作为历史信息在message中传入
+tool_call_id	string	说明：
+（1）当role=tool时，该字段必填
+（2）模型生成的function call id，对应tool_calls中的tool_calls[].id
+（3）调用方应该传递真实的、由模型生成id，否则效果有损
+reasoning_content	string	思维链内容，说明：只有当模型为DeepSeek-R1有效
+delta说明
+
+名称	类型	描述
+content	string	流式响应内容
+tool_calls	List[ToolCall]	由模型生成的函数调用，包含函数名称，和调用参数
+ToolCall说明
+
+名称	类型	描述
+id	string	function call的唯一标识，由模型生成
+type	string	固定值function
+function	function	function call的具体内容
+ToolCall中function说明
+
+名称	类型	描述
+name	string	函数名称
+arguments	string	函数参数
+search_results说明
+
+名称	类型	描述
+index	int	序号
+url	string	搜索结果URL
+title	string	搜索结果标题
+﻿usage说明
+
+名称	类型	描述
+prompt_tokens	int	问题tokens数（包含历史QA）
+completion_tokens	int	回答tokens数
+total_tokens	int	总tokens数
+
+4.2 文生图
+4.2.1 模型调用
+import os
+from openai import OpenAI
+import base64
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+# 生成的图片以链接形式返回
+images_url = client.images.generate(prompt="一只白猫, 红帽子", model="Stable-Diffusion-XL", response_format="url")
+print(images_url.data[0].url)
+
+# 生成的图片以 base64 形式返回
+images_base64 = client.images.generate(prompt="一只黑猫, 蓝帽子", model="Stable-Diffusion-XL", response_format="b64_json")
+# 保存生成的图片
+for i, image in enumerate(images_base64.data):
+    with open("image_{}.png".format(i), "wb") as f:
+        f.write(base64.b64decode(image.b64_json))
+4.2.2 请求参数说明
+名称	类型	必填	描述	openai-python是否原生支持
+model	string	是	模型ID，可选值可从client.models.list()	是
+prompt	string	是	提示词，即用户希望图片包含的元素。说明： 长度限制为1024字符，建议中文或者英文单词总数量不超过150个	是
+negative_prompt	string	否	反向提示词，即用户希望图片不包含的元素。说明： 长度限制为1024字符，建议中文或者英文单词总数量不超过150个	否
+response_format	string	否	返回生成图像的格式。必须是url或b64_json之一。生成图像后，url7天内有效。	是
+size	string	否	生成图片长宽，说明：
+（1）默认值 1024x1024
+（2）取值范围如下：
+适用头像： ["768x768", "1024x1024", "1536x1536", "2048x2048"]
+适用文章配图 ：["1024x768", "2048x1536"]
+适用海报传单：["768x1024", "1536x2048", "576x1024", "1152x2048"]
+适用电脑壁纸：["1024x576", "2048x1152"]	是
+n	int	否	生成图片数量，说明：
+（1）默认值为1
+（2）取值范围为1-4
+（3）单次生成的图片较多及请求较频繁可能导致请求超时	是
+steps	int	否	迭代轮次，说明：
+默认值为20
+取值范围为[10-50]	否
+style	string	否	生成风格。说明：
+（1）默认值为Base
+（2）可选值：
+Base：基础风格
+3D Model：3D模型
+Analog Film：模拟胶片
+Anime：动漫
+Cinematic：电影
+Comic Book：漫画
+Craft Clay：工艺黏土
+Digital Art：数字艺术
+Enhance：增强
+Fantasy Art：幻想艺术
+Isometric：等距风格
+Line Art：线条艺术
+Lowpoly：低多边形
+Neonpunk：霓虹朋克
+Origami：折纸
+Photographic：摄影
+Pixel Art：像素艺术
+Texture：纹理	是
+sampler_index	string	否	采样方式，说明：
+（1）默认值：Euler a
+（2）可选值如下：
+Euler
+Euler a
+DPM++ 2M
+DPM++ 2M Karras
+LMS Karras
+DPM++ SDE
+DPM++ SDE Karras
+DPM2 a Karras
+Heun
+DPM++ 2M SDE
+DPM++ 2M SDE Karras
+DPM2
+DPM2 Karras
+DPM2 a
+LMS	否
+retry_count	int	否	重试次数，默认1次	否
+request_timeout	float	否	请求超时时间，默认60秒	否
+backoff_factor	float	否	请求重试参数，用于指定重试的策略，默认为0	否
+seed	integer	否	随机种子，说明：
+不设置时，自动生成随机数
+取值范围 [0, 4294967295]	否
+cfg_scale	float	否	提示词相关性，说明：默认值为5，取值范围0-30	否
+4.2.3 模型响应参数
+名称	类型	描述
+created	int	时间戳
+data	list(image)	生成图片结果
+image说明
+
+名称	类型	描述
+b64_json	string	图片base64编码内容，当且仅当response_format=b64_json
+url	string	图片链接，当且仅当response_format=url
+index	int	序号
+
+4.3 向量
+4.3.1 模型调用
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+embeddings = client.embeddings.create(
+        model="embedding-v1",
+        input=[
+            "推荐一些美食",
+            "给我讲个故事"
+        ]
+    )
+print(embeddings)
+4.3.2 请求参数说明
+名称	类型	必填	描述
+model	str	否	模型ID，可选值可从client.models.list()
+Input	List[str]	是	填写文本，说明：
+（1）不能为空List，List的每个成员不能为空字符串
+（2）文本数量不超过16
+（3）说明：
+embedding-v1：文本数量不超过16，每个文本token数不超过384且长度不超过1000个字符
+bge-large-zh：文本数量不超过16，每个文本token数不超过512且长度不超过2000个字符
+4.3.3 返回参数说明
+名称	类型	描述
+object	str	回包类型，固定值“embedding_list”
+data	List[EmbeddingData]	embedding信息，data成员数和文本数量保持一致
+usage	Usage	token统计信息，token数 = 汉字数+单词数*1.3 （仅为估算逻辑）
+EmbeddingData说明
+
+名称	类型	描述
+object	str	固定值"embedding"
+embedding	List[float]	embedding 内容
+index	int	序号
+Usage说明
+
+名称	类型	描述
+prompt_tokens	int	问题tokens数
+total_tokens	int	tokens总数
+
+5.模型扩展能力用法
+5.1 多轮对话
+import os
+from openai import OpenAI
+
+def get_response(messages):
+    client = OpenAI(
+        api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+        base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+    )
+    completion = client.chat.completions.create(model="ernie-3.5-8k", messages=messages)
+    return completion
+
+messages = [
+    {
+        "role": "system",
+        "content": "你是 AI Studio 开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。",
+    }
+]
+
+assistant_output = "您好，我是AI Studio 开发者助理，请问有什么能帮助你的吗？"
+print(f"""输入："结束"，结束对话\n""")
+print(f"模型输出：{assistant_output}\n")
+user_input = ""
+while "结束" not in user_input:
+    user_input = input("请输入：")
+    # 将用户问题信息添加到messages列表中
+    messages.append({"role": "user", "content": user_input})
+    assistant_output = get_response(messages).choices[0].message.content
+    # 将大模型的回复信息添加到messages列表中
+    messages.append({"role": "assistant", "content": assistant_output})
+    print(f"模型输出：{assistant_output}")
+    print("\n")
+5.2 流式输出
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+    model="ernie-3.5-8k",
+    messages=[
+        {'role': 'system', 'content': '你是 AI Studio 实训AI开发平台的开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。'},
+        {'role': 'user', 'content': '你好，请介绍一下AI Studio'}
+    ],
+    stream=True,
+)
+
+for chunk in completion:
+    print(chunk.choices[0].delta.content or "", end="")
+5.3 异步调用
+import os
+from openai import AsyncOpenAI
+import asyncio
+
+client = AsyncOpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+async def main() -> None:
+    chat_completion = await client.chat.completions.create(
+        messages=[
+            {'role': 'system', 'content': '你是 AI Studio 实训AI开发平台的开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。'},
+            {'role': 'user', 'content': '你好，请介绍一下AI Studio'}
+        ],
+        model="ernie-3.5-8k",
+    )
+    print(chat_completion.choices[0].message.content)
+    
+
+asyncio.run(main())
+5.4 搜索增强
+使用场景
+
+对于需要获取实时信息或最新数据的场景，如新闻事件查询、文献检索、追踪政策变化。 基于联网搜索能力，模型能获取实时数据和信息，更精确的回答用户在特定场景下的问题。
+
+​使用方式
+
+在请求body中添加如下web_search参数，即可实现联网搜索，参数描述如下：
+
+参数名称	类型	必填	默认值	描述
+enable	boolean	否	否	是否启用联网搜索功能
+enable_trace	boolean	否	false	是否返回溯源信息
+enable_status	boolean	否	false	是否在响应中返回搜索触发信号，如果触发搜索，首包返回『正在搜索』，通过delta_tag:search_status表示这一包是信号包
+enable_citation	boolean	否	false	是否在响应中包含引用来源角标 。单个角标格式示例：^[1]^，多个角标格式示例：^[1][2]^
+search_number	integer	否	10	检索的文献数量，范围在[1~28]之间
+reference_number	integer	否	10	用于给大模型总结的文献数量，范围在[1~28]之间（需≤search_num）
+入参示例：
+
+{
+    "web_search": {
+        "enable": true,
+        "enable_citation": true,
+        "enable_trace": true,
+        "enable_status": true,
+        "search_num": 10,
+        "reference_num": 5
+    }
+}
+支持的模型：
+
+ernie-4.5
+ernie-4.5-turbo
+ernie-4.0
+ernie-4.0-turbo
+ernie-3.5
+deepseek-r1
+deepseek-v3
+代码实例：
+
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.0-turbo-8k",
+        messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "2024年奥运会乒乓球男单冠军是谁"
+                        }
+                    ]
+                }
+            ],
+            extra_body={
+                "web_search": {
+                    "enable": True,
+                    "enable_trace": True
+                }
+            },
+        stream=True,
+    )
+
+search_result = []
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        if (hasattr(chunk, 'search_results')):
+            search_result.extend(chunk.search_results)
+        print(chunk.choices[0].delta.content, end="", flush=True)
+    
+unique_dict = {}
+for item in search_result:
+    unique_dict[item["index"]] = item
+print("\n参考资料：\n")
+for result in list(unique_dict.values()):
+    print(str(result["index"]) + ". " + result["title"] + ". " + result["url"] + "\n")
+5.5 结构化输出
+介绍
+
+JSON 是世界上应用程序交换数据最广泛使用的格式之一。
+
+结构化输出是一项功能，可确保模型始终生成符合您提供的JSON模式的响应，因此用户不必担心模型省略必需的键或产生无效的枚举值。
+
+结构化输出的一些好处包括：
+
+可靠的类型安全：无需验证或重试格式错误的响应
+明确拒绝：基于安全的模型拒绝现在可以通过编程检测
+更简单的提示：不需要用强烈的措辞来提示，就能实现一致的格式
+如何支持 通过response_format字段来控制响应内容的生成。
+
+字段	数据类型	描述
+type	string	指定响应内容的格式，可选值： json_object：以json格式返回，可能出现不满足效果情况; text：以文本格式返回，默认为text; json_schema：以json_scheam规定的格式返回
+json_schema	object	json_schema格式，请参考JSON Schema描述；当type为json_schema时，该参数必填
+支持的模型
+
+ernie-4.5
+ernie-4.0-turbo
+ernie-3.5
+代码示例
+
+{
+  "model": "ernie-3.5-8k",
+  "messages": [
+    {
+      "role": "user",
+      "content": "今天上海天气"
+    }
+  ],
+  "response_format": {
+    "type": "text" //可替换成json_object、json_schema
+  }
+}
+可以看到当format设置不同时，返回content格式有所变化:
+
+未开启response_format
+  由于天气信息实时更新，我无法直接提供今天上海的精确天气情况。\n\n为了获取最新的上海天气信息，我建议您查看天气预报应用、访问气象局的官方网站或使用其他可靠的天气信息来源。这些平台通常会提供实时的气温、湿度、风速、降水概率等详细天气数据，以及未来几天的天气预测。\n\n希望这些建议对您有所帮助！
+开启response_format
+  "{\n    \"上海今天天气\": \"由于我无法实时获取天气信息，因此无法提供上海今天的确切天气情况。\"\n}\n\n为了获取上海今天的实时天气，我建议您查看手机上的天气应用、访问气象局的官方网站或使用其他可靠的天气信息来源。这些渠道通常会提供最新的天气状况、温度、湿度、风速等详细信息。"
+5.6 Function calling
+能力介绍
+
+Function call是能将大模型与外部工具或代码相连的功能，可通过该功能增强大模型在实时性、数据计算等应用场景的推理效果或进行其他外部操作，包括信息检索、数据库操作、图谱搜索与处理等工具调用场景。
+
+tools是模型服务API中的可选参数，用于向模型提供函数定义。通过此参数，模型能够生成符合用户所提供规范的函数参数。请注意，模型服务API实际上并不会执行任何函数调用，仅返回是否调用函数，以及调用的函数名与调用函数所需要的参数。开发者可以利用模型输出的参数在系统中进一步执行函数调用。
+
+支持的模型
+
+ernie-x1-turbo-32k
+deepseek-r1
+deepseek-v3
+调用步骤说明
+
+使用JSON Schema格式定义函数；
+通过tools参数将定义好的函数提交给支持function call的大模型，可一次提交多个函数；
+大模型将根据当前聊天上下文，决定使用哪个函数，也可能不使用函数；
+若大模型决定使用函数，大模型会将调用函数所需要的参数和信息通过JSON格式返回；
+使用大模型输出的参数，执行对应的函数，并将此函数执行结果提交给大模型；
+大模型将根据函数执行结果，给予用户回复。
+示例代码
+
+from openai import OpenAI
+
+client = OpenAI(
+     api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+     base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+tools = [
+  {
+    "type": "function",
+    "function": {
+      "name": "get_current_weather",
+      "description": "Get the current weather in a given location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA",
+          },
+          "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]},
+        },
+        "required": ["location"],
+      },
+    }
+  }
+]
+messages = [{"role": "user", "content": "What's the weather like in Boston today?"}]
+completion = client.chat.completions.create(
+  model="deepseek-v3",
+  messages=messages,
+  tools=tools,
+  tool_choice="auto"
+)
+
+print(completion)
+5.7 打印思维链（深度思考模型）
+非流式
+
+import os
+from openai import OpenAI
+
+client = OpenAI(
+     api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+     base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+chat_completion = client.chat.completions.create(
+    messages=[
+        {'role': 'system', 'content': '你是 AI Studio 实训AI开发平台的开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。'},
+        {'role': 'user', 'content': '你好，请介绍一下AI Studio'}
+    ],
+    model="deepseek-r1",
+)
+
+print(chat_completion.choices[0].message.reasoning_content)
+print(chat_completion.choices[0].message.content)
+流式
+
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+    model="deepseek-r1",
+    messages=[
+        {'role': 'system', 'content': '你是 AI Studio 实训AI开发平台的开发者助理，你精通开发相关的知识，负责给开发者提供搜索帮助建议。'},
+        {'role': 'user', 'content': '你好，请介绍一下AI Studio'}
+    ],
+    stream=True,
+)
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        if hasattr(chunk.choices[0].delta, 'reasoning_content') and chunk.choices[0].delta.reasoning_content:
+            print(chunk.choices[0].delta.reasoning_content, end="", flush=True)
+        else:
+            print(chunk.choices[0].delta.content, end="", flush=True)
+5.8 多模态
+5.8.1 多模态-文字输入
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.5-8k-preview",
+        messages=[
+            {
+                'role': 'user', 'content': [
+                    {
+                        "type": "text",
+                        "text": "介绍几个北京著名景点"
+                    }
+                ]   
+            }
+        ]
+    )
+
+print(completion.choices[0].message.content or "")
+5.8.2 多模态-文字输入-流式
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.5-8k-preview",
+        messages=[
+            {
+                'role': 'user', 'content': [
+                    {
+                        "type": "text",
+                        "text": "介绍几个北京著名景点"
+                    }
+                ]   
+            }
+        ]
+    )
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        print(chunk.choices[0].delta.content, end="", flush=True)
+5.8.3 多模态-图片输入(url)-流式
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.5-8k-preview",
+        messages=[
+            {
+                'role': 'user', 'content': [
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": "https://bucket-demo-bj.bj.bcebos.com/pic/wuyuetian.png",
+                        "detail": "high"
+                        }
+                    }
+                ]   
+            }
+        ],
+        stream=True,
+    )
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        print(chunk.choices[0].delta.content, end="", flush=True)
+5.8.4 多模态-图片输入(base64)-流式
+import os
+from openai import OpenAI
+
+
+def encode_image(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
+        
+# Path to your image
+image_path = "/image_1.png"
+
+# Getting the Base64 string
+base64_image = encode_image(image_path)
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.5-8k-preview",
+        messages=[
+            {
+                'role': 'user', 'content': [
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:image/jpeg;base64,{base64_image}"
+                        }
+                    }
+                ]   
+            }
+        ],
+        stream=True,
+    )
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        print(chunk.choices[0].delta.content, end="", flush=True)
+5.8.5 多模态-图片+文本输入-流式
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+        model="ernie-4.5-8k-preview",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                    "type": "text",
+                    "text": "图片当中是哪个乐队组合"
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://bucket-demo-bj.bj.bcebos.com/pic/wuyuetian.png",
+                        "detail": "high"
+                    }
+                }
+                ]
+            }
+        ],
+        stream=True,
+    )
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        print(chunk.choices[0].delta.content, end="", flush=True)
+5.8.6 多模态-视频理解--流式
+import os
+from openai import OpenAI
+
+client = OpenAI(
+    api_key=os.environ.get("AI_STUDIO_API_KEY"),  # 含有 AI Studio 访问令牌的环境变量，https://aistudio.baidu.com/account/accessToken,
+    base_url="https://aistudio.baidu.com/llm/lmapi/v3",  # aistudio 大模型 api 服务域名
+)
+
+completion = client.chat.completions.create(
+    model="default",
+    temperature=0.6,
+    messages= [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "描述这个视频"
+                },
+                {
+                    "type": "video_url",
+                    "video_url": {
+                        "url": "https://bucket-demo-01.gz.bcebos.com/video/sea.mov", 
+                        "fps": 1 
+                    }
+                }
+            ]
+        }
+    ],
+    stream=True
+)
+
+for chunk in completion:
+    if (len(chunk.choices) > 0):
+        print(chunk.choices[0].delta.content, end="", flush=True)
+注意：
+
+大模型每一次调用都是无状态的，您需要自行管理传入给模型的信息。如果需要模型多次理解同一张图像，请在每次请求时都传入该图。
+支持单图和多图，每一张图片大小不超过10MB，多张图片输入的总token不超过模型上下文长度。如ERNIE-4.5模型，不超过8K token的图片输入。
+图片格式：
+a. 图片base64：JPG、JPEG、PNG和BMP类型，传入的格式需为：data:image/<图片格式>;base64,<Base64编码>
+b. 图片公网url：支持JPG、JPEG、PNG、BMP和WEBP类型
+
+6. API Code 错误码
+HTTP状态码	类型	错误码	错误信息
+400	invalid_request_error	malformed_json	Invalid JSON
+400	invalid_request_error	invalid_model	model is empty
+400	invalid_request_error	malformed_json	Invalid Argument
+400	invalid_request_error	malformed_json	返回的具体错误信息
+400	invalid_request_error	invalid_messages	返回的具体错误信息
+400	invalid_request_error	characters_too_long	the max input characters is xxx
+400	invalid_request_error	invalid_user_id	user_id can not be empty
+400	invalid_request_error	tokens_too_long	Prompt tokens too long
+401	access_denied	no_parameter_permission	返回的具体错误信息
+401	invalid_request_error	invalid_model	No permission to use the model
+401	invalid_request_error	invalid_appid	No permission to use the appid
+401	invalid_request_error	invalid_iam_token	IAM Certification failed
+403	unsafe_request	system_unsafe	the content of system field is invalid
+403	unsafe_request	user_setting_unsafe	the content of user field is invalid
+403	unsafe_request	functions_unsafe	the content of functions field is invalid
+404	invalid_request_error	no_such_model	
+405	invalid_request_error	method_not_supported	Only POST requests are accepted
+429	rate_limit_exceeded	rpm_rate_limit_exceeded	Rate limit reached for RPM
+429	rate_limit_exceeded	tpm_rate_limit_exceeded	Rate limit reached for TPM
+429	rate_limit_exceeded	preemptible_rate_limit_exceeded	Rate limit reached for preemptible resource
+429	rate_limit_exceeded	user_rate_limit_exceeded	qps request limit by APP ID reached
+429	rate_limit_exceeded	cluster_rate_limit_exceeded	request limit by resouce cluster reached
+500	Internal_error	internal_error	Internal error
+500	Internal_error	dispatch_internal_error	Internal error
+
+
+
+上一篇
+ComfyUI Custom API
+下一篇
+LLM_API
+合作咨询
+文档反馈

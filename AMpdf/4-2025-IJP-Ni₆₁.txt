@@ -1,0 +1,1100 @@
+Anomalous anisotropy in an additively manufactured 
+solid-solution-strengthened superalloy from room to 
+elevated temperatures
+Zhenhua Zhang a,1
+, Zixu Guo b,1,*
+, Quanquan Han a,*
+, Daijun Hu b
+, Shiwei Wu c
+, 
+Haiyang Fan c
+, Erlei Li b
+, Ming Li a
+, Yilun Xu d
+, Shoufeng Yang c
+, Chuanzhen Huang e
+, 
+Wentao Yan b,*
+a State Key Laboratory of Advanced Equipment and Technology for Metal Forming, School of Mechanical Engineering, Shandong University, Jinan, 
+250061, China b Department of Mechanical Engineering, National University of Singapore, Singapore 117575, Singapore c Chinese Academy of Sciences, Chongqing Institute of Green and Intelligent Technology, Chongqing 400714, China d Institute of High Performance Computing (IHPC), Agency for Science, Technology and Research (A*STAR), 1 Fusionopolis Way, #16-16 Connexis, 
+Singapore 138632, Republic of Singapore e School of Mechanical Engineering, Yanshan University, Qinhuangdao, Hebei, 066000, China
+ARTICLE INFO
+Keywords:
+Additive manufacturing
+Superalloys
+Grain morphologies
+Anisotropy
+Crystal plasticity
+ABSTRACT
+Metal additive manufacturing (AM) produces unique grain morphologies owing to the high 
+cooling rates and large temperature gradients, which potentially lead to unexpected mechanical 
+anisotropy. In this study, we unveil an anomalous anisotropic behaviour in a solid-solution￾strengthened superalloy with periodic columnar-to-crescent grains fabricated by laser powder 
+bed fusion (LPBF). Specifically, as-built (AB) specimens show higher strength perpendicular to the 
+build direction (BD) than that parallel to the BD at room temperature (RT), while the opposite 
+trend occurs at the elevated temperature (ET, 900 ◦C). Besides, the heat treatment eliminates the 
+anisotropy of strength at both RT and ET. A dislocation-based damage-coupled crystal plasticity 
+finite element (CPFE) model with strain gradients is utilized to understand the origin of the above 
+anomalous anisotropy. It is found that the transition of anisotropy from RT to ET is attributed to 
+the temperature-dependent dislocation annihilation combined with initial dislocations in AB 
+state. In contrast to the heat-treated specimens without anisotropy, the LPBF-induced residual 
+deformation primarily contributes to the anisotropy at RT, whereas the initial dislocations 
+dominate the anomalous anisotropy at ETs for AB specimens. The CPFE model reveals the 
+threshold temperature to be 600 ◦C for the occurrence of anomalous anisotropy, which is 
+experimentally validated. This study presents a comprehensive understanding into temperature￾dependent anisotropy of AM superalloys, and in turn guides the regulation of anisotropy by 
+tuning microstructures.
+* Corresponding authors.
+E-mail addresses: guozixu@nus.edu.sg (Z. Guo), hanquanquan@sdu.edu.cn (Q. Han), mpeyanw@nus.edu.sg (W. Yan). 1 These authors contribute equally.
+Contents lists available at ScienceDirect
+International Journal of Plasticity
+journal homepage: www.elsevier.com/locate/ijplas
+https://doi.org/10.1016/j.ijplas.2025.104409
+Received 26 April 2025; Received in revised form 19 June 2025; 
+International Journal of Plasticity 192 (2025) 104409
+Available online 3 July 2025
+0749-6419/© 2025 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+1. Introduction
+Additive manufacturing (AM) of superalloys is promising to achieve fast, near-net shaping of hot components in aerospace ap￾plications (Dang et al., 2025; Gu et al., 2021; Hu et al., 2024b). Laser powder bed fusion (LPBF) is one of the most precise AM 
+technologies, in which a focused laser beam is used to selectively melt a powder bed in a layer-by-layer sequence to build the com￾ponents (Blakey-Milner et al., 2021; Wen et al., 2025). Recently, LPBF technique has been applied to fabricate the superalloy fuel 
+nozzles and many other critical parts (Sun et al., 2021). Compared to conventionally manufactured counterparts, LPBF-fabricated 
+nozzles have been demonstrated to exhibit reduced weight and enhanced durability, as reported in several studies (NASA, 2023; 
+Subeshan et al., 2024; Tan et al., 2021). Moreover, LPBF technique shows potentials to impart superior mechanical properties for 
+superalloy components, and offers tunable strength and ductility through various heat treatment strategies (Lu et al., 2023; Song et al., 
+2024). Therefore, such advances demonstrate the potential of LPBF technology in fabricating high-performance superalloy compo￾nents for critical applications.
+Under high cooling rates (>2 × 105 K/s) and large temperature gradients (>5 × 105 K/m) (Okugawa et al., 2024; Tang et al., 2021), 
+some unique LPBF-induced microstructures in superalloys possibly lead to anisotropic mechanical behaviour. A substantial number of 
+studies conducted at room temperature (RT) have found that, the LPBF Inconel 718 superalloy exhibited higher strength in the 
+horizontal direction (perpendicular to the build direction (BD)) compared with the vertical direction (parallel to BD) (Cui et al., 2023). 
+For instance, Chen et al. (Chen et al., 2018) reported that the yield strength (YS) under horizontal tension was 23 MPa higher than that 
+under vertical tension in a LPBF K418 superalloy. Similarly, Zhang et al. (Zhang et al., 2023a) demonstrated that horizontal tension 
+exhibited a YS that is 101 MPa higher than that of vertical tension for a LPBF GH4099 superalloy. In those studies, numerous columnar 
+grains parallel to the BD with strong anisotropy, were formed driven by the temperature gradient in the LPBF process, which was 
+summarized as the key reason for the higher YS perpendicular to BD. Zhang et al. (Zhang et al., 2021) also demonstrated that the HX 
+superalloys fabricated under different laser scanning strategies (0◦, 90◦ and 67◦ hatch angles and a chessboard pattern with a 67◦ hatch 
+angle) shared a similar anisotropy behaviour at RT. Therefore, the higher YS perpendicular to BD has been widely recognized as a 
+common anisotropic behaviour in previous studies at RT, while it remains unknown whether this trend persists at elevated temper￾atures (ETs).
+Since superalloys are designed for high-temperature applications exceeding 600 ◦C, it is essential to focus on the mechanical 
+properties of LPBF superalloys at ETs (Hu et al., 2024b; Liu et al., 2023; Sun et al., 2024). Unlike the widely recognized anisotropy 
+trend at RT, no clear consensus regarding the anisotropic behaviour at ETs has been established for LPBF superalloys (Farias et al., 
+2024; Rezaei et al., 2021; Yu et al., 2020). For example, Yu et al. printed an HX superalloy with strong textures and high initial 
+Fig. 1. Specimen preparation: (a) Schematic diagram for the sampling of tensile specimens. (b) Morphology of superalloy powder. (c) Dimensions of 
+the tensile specimen. (d) Schematic diagram of the scanning strategy. (e) Schematic diagram for the formation of LPBF-induced periodic columnar￾to-crescent grains.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+2
+dislocation density induced by the large temperature gradient and thermal stresses during the LPBF process, which exhibited higher YS 
+under horizontal tension across various temperatures (400, 500, 600, and 700 ◦C) (Yu et al., 2020). Farias et al. reported a similar 
+anisotropic behaviour for an AM superalloy with only large columnar grains at 1050 ◦C (Farias et al., 2024). In contrast, Rezaei et al. 
+reported that an LPBF IN718 superalloy with the transition of columnar-to-crescent grains, exhibited higher strength under the 
+horizontal tension at RT, whereas the load-bearing capacity was larger under vertical tension at 650 ◦C (Rezaei et al., 2021). Those 
+inconsistent results arise from the AM-induced intricate microstructures such as grain morphology, initial dislocations, and residual 
+stresses (Wang et al., 2023). Their effects on macroscopic anisotropy at ETs have not been comprehensively understood.
+The anisotropic behaviour of LPBF superalloys is attributed to several AM-induced factors (Bean et al., 2019; Rezaei et al., 2020). 
+Previous studies have identified some potential contributors to the anisotropy, including crystallographic texture, orientation of the 
+columnar grains, residual stresses formed in the LPBF process, and high initial dislocation densities (Kok et al., 2018; Rezaei et al., 
+2020). Moreover, there is a complex coupling relationship among different AM-induced factors, which collectively influence the 
+anisotropy of AM alloys (Dai et al., 2024; Hu et al., 2024a). Without quantifying the contributions of each LPBF-induced factor, the 
+mechanism for the temperature-dependent anisotropy in LPBF superalloys remains an unresolved issue. One critical gap is the lack of 
+comprehensive tests for LPBF superalloys to clarify the evolution of anisotropic behaviour from RT to ETs. Another gap is the lack of 
+dislocation evolution history, which is crucial for fundamentally understanding the anisotropic behaviour of LPBF superalloys from RT 
+to ETs. In this regard, micro-mechanics simulations serve as a powerful tool to bridge this gap.
+In this work, a superalloy with representative microstructures is fabricated using LPBF technology. An anomalous anisotropic 
+behaviour is revealed through tensile tests conducted on as-built (AB) and heat-treated (HT) specimens from RT to ETs. Then, a 
+dislocation-based crystal plasticity finite element (CPFE) model is developed to elucidate the underlying mechanisms of the anomalous 
+anisotropy and quantify the contributions of each AM-induced factor. Driven by the strain gradient resulting from periodic columnar￾to-crescent grains, the effect of geometrically necessary dislocation (GND) evolution on tensile behaviour is unveiled. Finally, the 
+threshold temperature for the transition of anisotropy is predicted using CPFE simulations, which is validated against experiments. 
+This study contributes to understanding and predicting the anisotropic behaviour of AM solid-solution-strengthened superalloys across 
+RT to ETs, and also inspires the regulation of anisotropy at varying temperatures by tuning the microstructures.
+2. Material and methods
+2.1. LPBF fabrication
+The spherical gas-atomised SD3230 Ni-based superalloy powder used in this study is produced by Avimetal AM Technology 
+(Beijing, China). The powder’s elemental composition is 21.49 Cr - 13.13 W - 2.22 Mo - 1.57 Fe - 1.30 Co - 0.46 Al - 0.34 Mn - 0.30 Si - 
+0.029 La - 0.48 C - Bal Ni (weight percent, wt.%). As shown in Fig. 1 b, the powder exhibits notable sphericity, with a nominal powder 
+size ranging from 15 to 53 μm and D50 of 30.42 μm. A Concept Laser Mlab 200R (GE, Germany) LPBF machine equipped with a 200 W 
+fibre laser source (wavelength = 1070 nm) is employed to print the superalloy. A zig-zag scanning pattern is applied, along with 90◦
+rotation in the laser path between layers (Fig. 1 d). All specimens are fabricated under optimised printing parameters (Table 1), 
+resulting in a high density exceeding 99.5 % (measured by the Archimedes method), without any microcracks or lack of fusion defects 
+being found in the AB state. Moreover, as demonstrated in Appendix D, the crack initiation at LPBF-induced defects is not dominant.
+Fig. 1 e illustrates the mechanism of LPBF-induced periodic columnar-to-crescent grains, with formation mechanisms similar to 
+those in previous studies (Gokcekaya et al., 2021; Lyu and Zou, 2025; Sun et al., 2019). The rapid solidification and thermal gradients 
+during the laser scanning process, lead to the continuous growth of large columnar grains at the regions without the overlap of adjacent 
+melt tracks. Meanwhile, due to the remelting at the overlap region, crescent grains form around the large columnar grain during the 
+LPBF process. Fig. 1 a shows the sampling arrangement for the tensile specimens which are extracted from printed bulks with a size of 
+70 × 2.5 × 20 mm3
+. Specimens for vertical and horizontal tension are fabricated to investigate the anisotropy of tensile behaviour for 
+the LPBF superalloy from RT to ETs. Moreover, the solid-solution heat treatment is conducted at 1150 ◦C for 2 h (based on the 
+ASTM-B572 standard) to eliminate the LPBF-induced residual stresses and initial dislocations (ASTM, 2016), without altering the grain 
+morphology (demonstrated in subsequent Section 3.2.1). Since the alloy investigated in this study is a solid-solution-strengthened 
+Ni-based superalloy with a low Al content (0.46 wt.%), the formation of γ’ precipitates (Ni3Al) is absent during thermal exposure. 
+Consequently, aging treatment is not applied, as it would not contribute to additional strengthening (Adapa et al., 2025).
+2.2. Tensile testing
+The specific dimensions of the tensile specimens are shown in Fig. 1 c. Uniaxial tensile tests at RT condition are performed using an 
+Exceed E44-30 kN (MTS, China) electronic universal testing machine with a strain rate of 0.02 min-1, in accordance with the ASTM E8
+standard (ASTM, 2021). A contact extensometer with a gauge length of 25 mm is employed to measure the tensile strain during the RT 
+Table 1 
+LPBF-processing parameters for the superalloy.
+Printing parameters Value Printing parameters Value
+Laser power 190 W Hatch spacing 110 μm
+Laser scanning speed 900 mm/s Layer thickness 40 μm
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+3
+tensile tests. A QingJi212 uniaxial tensile testing system (Shanghai, China) is applied to conduct the tensile tests at ETs (600, 900 ◦C), 
+in accordance with the ASTM E21 standard (ASTM, 2009). A resistance-heating furnace is used to heat the specimens. A thermocouple 
+and a temperature controller are used to maintain the expected temperature. Before the tensile tests at ETs, the specimens are 
+pre-heated for 20 min to ensure a uniform temperature distribution. To ensure the reproducibility of the mechanical anisotropy trends 
+observed in this study, at least two specimens are tested for each condition (material states, testing temperatures, and loading 
+directions).
+It should be noted that, although tensile tests are carried out at three temperatures (RT, 600 ◦C,and 900 ◦C), the data at 600 ◦C are 
+presented in the discussion (Section 4.4) to validate the threshold temperature for the anisotropy transition. The YS is determined using 
+1 % strain offset rather than the conventional 0.2 % offset, to highlight the changes in yielding points under varying temperatures and 
+loading conditions, thereby facilitating a clearer presentation of the anisotropic behaviour.
+2.3. Microstructure characterisation
+The XOY and XOZ planes of the specimens are ground and polished to examine the microstructure features. The specimens are 
+initially ground using SiC sandpapers of 320, 600, 1500, and 2500 grit, followed by sequential polishing with diamond suspensions of 3 
+μm and 1 μm. Finally, to enhance the quality of electron backscatter diffraction (EBSD) and X-ray diffraction (XRD) data acquisition, 
+the specimens are polished using a 0.04 μm SiO₂ suspension for 50 min. XRD characterisation is performed using a SmartLab 3 kW 
+diffractometer (Rigaku, Japan) with Cu Kα radiation. The polished surfaces serve as the XRD test surfaces, with measurements con￾ducted over a 2θ range of 40–100◦ at a scanning speed of 3◦/min. EBSD analysis is conducted under a JSM-7800F (JEOL, Japan) field 
+emission scanning electron microscope, combined with a NordlysMax3 (Oxford Instructions, Oxford, UK) detector at a 20 kV accel￾eration voltage and a probe current of grade 16. The EBSD scanning area is 800 × 800 μm2
+, with a step size of 1 μm. The EBSD data are 
+post-processed by ATEX software (Beausir and Fundenberger, 2017), and our in-house code (Guo et al., 2025). Specimens near the 
+fracture surfaces are cut into disc-shaped transmission electron microscope (TEM) samples using electrical discharge machining. These 
+disc-shaped specimens are then mechanically thinned to 50 μm. Thinning is further performed using a PIPS II 695 precision ion 
+polishing system (Gatan, USA), starting at 5 keV, with ion gun angles of ± 8◦ until perforation occurs. Subsequently, the ion beam 
+energy is gradually reduced to 4.5 keV at ± 6◦ for 5 min, 4.0 keV at ± 4◦ for 5 min, and finally 3 keV at ± 3◦ for 5 min. The 
+microstructure is observed using an FEI Talos F200X (Thermo Fisher, USA) field emission TEM with an acceleration voltage of 200 kV.
+The algorithm mapping GND density based on EBSD data is mainly based on our previous work (Guo et al., 2025), with a brief 
+introduction provided below. The local lattice curvature tensor κ is utilized to calculate the Nye tensor α: 
+αik = κki − δkiκmm
+κij = ∂ϕi
+∂xj
+(1) 
+where ϕi is the misorientation angle regarding i axis, x is the position vector, δki is the Kronecker symbol. The slip system-resolved GND 
+densities can be linked with the Nye tensor: 
+α = AρGND (2) 
+There are 9 constraints provided in Eq. (2), but we have 18 independent variables to be solved in ρGND for FCC metals (Pantleon, 
+2008). Thus, we assume that the GND densities exist in the configuration with the lowest total energy, and apply the L1 minimization 
+algorithm to estimate the GND density at each slip system (Zhu et al., 2016): 
+∑18
+n=1
+wn
+ρn
+GND = min (3) 
+where wn (1 for edge GNDs, (1-μ) for screw GNDs) is the weight associated with the line energy of dislocations, and n is the GND type.
+There are two main limitations in the EBSD-based algorithm for resolving GND density. First, only 5 components in the Nye tensor 
+are accessible when using EBSD data as an input (Pantleon, 2008), while the Nye tensor contains 9 components in total. Secondly, due 
+to the lack of sufficient constraints for slip system-dependent GNDs, the L1 minimization algorithm is used to approximate the GND 
+densities, which could also introduce some errors in the resolved GND densities due to the inadequate constraints. To overcome these 
+limitations, 3D EBSD techniques could be employed in future studies.
+Moreover, the EBSD data are utilized to map the residual deformation gradient and plastic strians. First, the Nye tensor α is linked 
+with Fp0 (Acharya and Bassani, 2000): 
+α = (
+∇ × Fp0
+)T (4) 
+Fp0 is estimated through the pseudo-inverse method (Penrose, 1955) based on the α derived from EBSD results, with the detailed 
+procedure and validation in our previous work (Hu et al., 2024a). The resolved initial Fp0 in AB state induced by the thermal stresses 
+during LPBF process, is employed as the initial plastic deformation gradients in CPFE simulations as the pre-condition, to consider the 
+effect of residual stresses. Additionally, this method is also used to capture the residual plastic strain induced by tensile deformation, in 
+order to validate the simulated strain partitioning behaviour. The residual Fp resolved using EBSD can be converted into residual 
+plastic strains through the Green–Lagrange formation (Dill, 2006).
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+4
+2.4. Dislocation-based damage-coupled crystal plasticity model
+CPFE modeling is employed to understand the anisotropy of LPBF superalloy at RT and ET. The LPBF-induced initial dislocations 
+and residual deformation are incorporated in the simulations, which are extracted from EBSD data, with detailed procedures in our 
+previous work (Hu et al., 2024a). The GNDs resolved at individual slip systems are introduced to capture the strain gradient effect 
+arising from columnar-to-crescent grains. Additionally, the stored energy density (SED) (Wan et al., 2014; Xu et al., 2024), is integrated 
+into the CPFE simulations as an indicator to display damage distributions. The details of the crystal plasticity model are presented 
+below.
+The deformation gradient F can be decomposed into elastic part Fe and plastic part Fp: 
+F = Fe Fp (5) 
+in which the residual deformation Fp0 formed in the LPBF process is taken as the initial condition of the plastic deformation gradient, to 
+capture the effects of residual stresses. The Green–Lagrange elastic strain tensor is written as (Lu et al., 2020; Pedersen, 2005): 
+εe = 1
+2
+(
+FT
+eFe − I
+) (6) 
+Then, the stress tensor is calculated as follows (Addessio et al., 2017; Liu et al., 2020): 
+σ = C : εe (7) 
+where C is the elasticity tensor. The shear strain rates γ˙
+s across all slip systems collectively contribute to the plastic strain rate (Liu et al., 
+2025; Wong et al., 2016): 
+˙εp = ˙
+FpFp
+− 1 = ∑Nslip
+s=1
+(ss ⊗ ns
+)γ˙
+s (8) 
+where Nslip is the number of slip systems, ss is the unit vector along the slip direction, and ns is the unit vector normal to the slip plane.
+The plastic flow rule proposed by Peirce et al. is employed to calculate the slip rate in each slip system (Peirce et al., 1983; Rice, 
+1971; Xu et al., 2025): 
+˙γs = ˙γref( |τs
+|
+τs
+c(1 − D)
+)n
+sign(τs
+) (9) 
+where τs
+c is known as the total slip resistance of the slip system (Guo et al., 2024), n is the exponent of the power law, and γ˙ref is the 
+reference slip rate.
+Under the framework of continuum damage mechanics, the damage variable D is incorporated in the flow rule, to predict the crack 
+nucleation, which represents the proportion of reduction in the effective bearing area. The damage variable results from various micro￾defects, such as atomic vacancies and micro-pores formed during the deformation, particularly in ET conditions (Chaboche, 1988; Guo 
+et al., 2023). At the moment of D=1, the fraction of micro-defects is high enough to result in macroscopic crack nucleation (Lemaitre, 
+1985). Since the damage variable leads to reductions in effective bearing area and stiffness, the τs is replaced by the effective resolved 
+shear stress τs
+/(1 − D) in Eq. (9). The damage D will be derived from SED subsequently.
+The τs
+c in Eq. (9) is written as (Bayley et al., 2006; Zhang et al., 2023b): 
+τs
+c = τs
+0 + φ0Gb
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑Nslip
+α=1
+√
+χs
+α
+( ⃒
+⃒ρα
+SSD
+⃒
+⃒ + ⃒
+⃒ρα
+GNDe
+⃒
+⃒ + ⃒
+⃒ρα
+GNDs
+⃒
+⃒
+)
+√√√ (10) 
+where ρα
+GNDe and ρα
+GNDs are the edge and screw components of GND density, ρα
+SSD is the immobile SSD density, φ0 is the pre-factor of the 
+Taylor hardening law and χs
+α is the latent hardening matrix, and τs
+0 is the initial slip resistance capturing the lattice friction and solid￾solution strengthening in the LPBF superalloy. The evolution of statistically stored dislocation (SSD) density ρs
+SSD is given as (Hu et al., 
+2024a): 
+˙ρs
+SSD =
+(
+K
+√̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+⃒
+⃒ρs
+SSD
+⃒
+⃒ + ⃒
+⃒ρs
+GNDe
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅ ⃒
+⃒ + ⃒
+⃒ρs
+GNDs
+⃒
+⃒
+̅
+− 2yc
+⃒
+⃒ρs
+SSD
+⃒
+⃒
+) |γ˙
+s
+|
+b (11) 
+where ρs
+GNDe and ρs
+GNDs are the edge and screw GND densities, γ˙
+s is the resolved shear strain rate, K is a coefficient representing the 
+accumulation rate of SSD. The yc is the critical annihilation distance governing the dislocation annihilation rate. Additionally, the 
+LPBF-induced initial SSD density is uniformly distributed within the simulation domain. Moreover, the GNDs are incorporated to 
+consider the extra strengthening effect induced by strain gradients (Arsenlis and Parks, 1999): 
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+5
+⎧
+⎪⎪⎨
+⎪⎪⎩
+ρs
+GNDe = − 1
+b ∇γs ⋅ ss
+ρs
+GNDs = 1
+b ∇γs ⋅ t
+s
+(12) 
+where ts = ss × ns is the direction of screw dislocation motion. When implementing Eq. (12), the slip system-dependent accumulated 
+slip γs is calculated by integrating the slip increments provided by Eq. (9). Subsequently, the edge and screw GND densities are resolved 
+onto each slip system based on the gradients of accumulated slip, according to the original definition of GNDs in Eq. (12). The scalar 
+GND and SSD densities defined in Eq. (15) are used to calculate SED.
+The SED G is employed as the damage indicator, which represents the internal energy stored around the dislocation structures (Wan 
+et al., 2014; Xu et al., 2024): 
+G =
+∫ ξσ : dεp ̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅ ρGND + ρSSD √ (13) 
+where ξ is a constant that is given as 0.05. The micro-cracks are likely to nucleate at the locations with higher SED, then the scalar 
+damage indicator ranging from 0 to 1 is defined as: 
+D = G
+Gcr
+(14) 
+where Gcr is the critical SED for crack nucleation.
+Moreover, the CPFE simulations are performed under the open-source MOOSE framework (Permann et al., 2020). This platform 
+facilitates solving the GND densities induced by strain gradients, by using the embedded solver for spatial gradients. The stress-based 
+Newton-Raphson iterative solving approach is employed, offering greater computational efficiency. The parameters are calibrated in 
+Appendix A, with details of parameter determination provided in Table A.1. It should be noted that all parameters are calibrated 
+exclusively using specimens subjected to horizontal tension, while those subjected to vertical tension are used solely for validation of 
+Fig. 2. Experimental stress-strain responses: (a, b) Horizontal and vertical tension for AB and HT specimens at RT. (c, d) Horizontal and vertical 
+tension for AB and HT specimens at ET (900◦C). The 1% offset of strain is used to determine the YS, in order to highlight the difference in YS 
+between various testing cases. Two parallel specimens are used in each test condition to confirm the anomalous anisotropic behaviour, in which the 
+fracture consistently occurs within the gauge length. The error bars represent the deviation between the two parallel specimens. In addition, the ‘H’ 
+and ‘V’ in all figures are the abbreviations of ‘horizontal tension’ and ‘vertical tension’, respectively.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+6
+the calibration results. As shown in Fig. A.1, the calibrated CPFE model successfully reproduces both normal anisotropy (horizontal 
+strength > vertical strength) at RT and anomalous anisotropy (horizontal strength < vertical strength) at 900 ◦C for AB specimens, 
+respectively. The absence of anisotropy at HT states also can be captured after parameter calibration. Additionally, detailed validations 
+on GND and strain distributions are provided in Fig. 7 and Appendix C, respectively. Those comprehensive validations collectively 
+support the reliability of the calibrated parameters.
+3. Results
+3.1. Anomalous anisotropic tensile behaviours from RT to ET
+Fig. 2 illustrates the tensile properties of AB and HT specimens under RT and ET conditions. The average values of yield strength 
+and total elongation are reported along with their corresponding standard deviations, based on the two specimens tested under each 
+condition. At the RT (Fig. 2 a), the AB specimens show higher strength than the HT specimens, with pronounced anisotropy between 
+the horizontal and vertical tensions. At the RT, the YS and EL (defined as the fracture EL) of AB-H are found to be 1121.5 ± 9 MPa and 
+8.2 ± 0.72 % in average, compared with 1026.5 ± 0.5 MPa and 4.2 ± 0.4 % under AB-V. Heat treatment reduces strength but increases 
+the EL, which is consistent with previous studies on AM superalloys (Taller and Austin, 2022; Zhou et al., 2022). The HT-H shows YS of 
+775.0 ± 1.0 MPa and EL of 12.6 ± 0.32 %, while HT-V exhibits YS of 773.0 ± 1.0 MPa and EL of 12.8 ± 0.9 %. For AB specimens, the 
+differences in YS and EL between horizontal and vertical tensions are about 95.0 MPa and 4.0%. In contrast, for the HT specimens, the 
+Fig. 3. Microstructures of (a) AB and (b) HT specimens: (a1, b1) XRD patterns, demonstrating the predominant FCC lattice structure in AB and HT 
+specimens. (a2, b2) Pseudo-3D view for the EBSD-based inverse pole figures (IPF-BD) for the three cross-sections, indicating a strong crystallo￾graphic texture along BD under both AB and HT states. (a3, b3) Bright-field TEM images showing the distribution of dislocations, suggesting that the 
+HT process significantly reduces the LPBF-induced initial dislocations. (c) Grain morphology distributions in AB and HT specimens, indicating a 
+periodic columnar-to-crescent grain morphology. The aspect ratio of grain is calculated using ATEX software, which is defined as the ratio of the 
+grain’s major axis length to its minor axis length, based on 2D projected grain morphology. A high aspect ratio corresponds to columnar grains, 
+whereas an aspect ratio close to 1 indicates equiaxed or crescent grains. (d, e) Comparison of statistical grain aspect ratio between AB and HT 
+specimens within the XOY and XOZ planes, quantifying that the HT process has minimal effect on the morphology of grains.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+7
+anisotropy is diminished after the heat treatment.
+At the ET condition, the AB specimens exhibit higher strength, but lower EL compared with the HT specimens (Fig. 2 c), resembling 
+the trends at RT. For the AB specimens, YS and EL are 341.5 ± 2.7 MPa and 7.7 ± 0.3 % under horizontal tension (AB-H), together with 
+364.3 ± 3.3 MPa and 15.5 ± 3.5 % under vertical tension (AB-V). After heat treatment, YS and EL change to 275.0 ± 4.0 MPa and 20.0 
+± 0.88 % for HT-H, together with 273.0 ± 2.0 MPa and 47.5 ± 5.5 % for HT-V, respectively. Fig. 2 d highlights the anomalous 
+anisotropy differing from the trends at RT (Fig. 2 b), indicating that AB-V specimens exhibit about a YS 22.8 MPa higher than AB-H. 
+After heat treatment, the anisotropy of YS diminishes, mirroring the trend at RT. In contrast to the tensile behaviour at RT, the tests at 
+ET indicate that the EL under vertical tension is roughly twice that under horizontal tension for both AB and HT specimens. It should be 
+noted that the EL values exhibit greater dispersion in the AB specimens due to the inherent microstructural heterogeneity. However, 
+the YS focused in this paper is highly reproducible, providing a reliable foundation for our analysis of anisotropic behaviour.
+Therefore, based on the tensile behaviour shown above, we can summarize the anomalous anisotropic behaviour for the LPBF 
+superalloy as follows: 
+1. For the AB state, compared with vertical tension, horizontal tension shows higher YS at RT, while exhibiting lower YS at ET.
+Fig. 4. RVE in CPFE simulations: (a) EBSD-based grain aspect ratio distribution within a large region of 800 μm × 800 μm, indicating a periodic 
+distribution of columnar-to-crescent grains. The RVE is thus selected as one of the periodic structures. (b) EBSD-based grain size distribution within 
+the RVE marked in a, where the unit cell for the visualization of grain orientation is drawn in each grain. (c) Comparison of statistical grain size 
+distribution between a and b, suggesting that the RVE with a single periodic structure is representative. (d) IPFs for the grain orientations within 
+RVE, in which the scatters share the same colour bar with b. (e) Finite element model used in the simulations, in which Φ represents the second 
+component of Euler angles. (f-g) Mapping of local yield strength under horizontal and vertical tension, suggesting that crescent grains are ‘harder’ 
+than columnar grains in both tensile modes.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+8
+2. The AB state shows pronounced anisotropy, while no significant anisotropy of YS can be found in the HT state under both RT and 
+ET.
+3. Compared with vertical tension, the horizontal tension tends to have a lower EL at higher temperatures for both AB and HT 
+specimens.
+3.2. Microstructures and simulation results
+3.2.1. Microstructures
+XRD analysis shows that both the AB (Fig. 3 a1) and HT (Fig. 3 b1) specimens exhibit typical face-centred cubic (FCC) austenite 
+microstructures. As illustrated in Fig. 3 a1, the (200) diffraction peak appears as the main peak in the AB-XOY and AB-XOZ diffraction 
+patterns. During solidification, the FCC grains tend to grow preferentially along the thermal gradient in the <001> direction, resulting 
+in a pronounced (200) diffraction peak (Kurz et al., 2023). The (200) peak intensity on the XOZ plane is higher than that on the XOY 
+plane (Fig. 3 a1), indicating a stronger temperature gradient-induced crystallographic texture along the BD compared to the OX or OZ 
+direction. It is worth noting that XRD characterizes the crystallographic orientation normal to the observation planes. This observation 
+is also consistent with a previous study using similar printing parameters (Yin et al., 2022). As shown in Fig. 3 b1, the XRD patterns of 
+the HT specimens remain roughly unchanged compared with those of AB specimens. The XRD patterns indicate that the heat treatment 
+has minimal effect on the orientation of the texture.
+As shown in the EBSD orientation map (Fig. 3 a2), the LPBF-induced large columnar grains exhibit [001] preferred orientation 
+along BD, surrounded by crescent grains with random orientations. Fig. 3 b2 indicates that the features of grain orientations remain 
+unchanged after the heat treatment, which similarly exhibits the [001] preferred orientation along BD. This is consistent with the XRD 
+results. TEM characterisation further confirms that the primary difference in microstructures before and after heat treatment lies in the 
+dislocation density. As shown in Fig. 3 a3 and b3, the AB specimen exhibits a dense dislocation network around the sub-grain 
+boundaries, while the dislocation density is greatly reduced after heat treatment. The additional TEM observation provided in 
+Appendix E further corroborates this trend. These results are consistent with the microstructure evolution of LPBF HX superalloy 
+before and after heat treatment in literature (Sun et al., 2021). Previous studies demonstrated that the high initial dislocation density is 
+caused by the large temperature gradient and thermal stresses in the rapid solidification process of LPBF (Hu et al., 2023; Wang et al., 
+2020).
+The aspect ratio distribution (Fig. 3 c) of grains indicates that the grain morphology within the YOZ plane for the AB and HT 
+specimens presents a similar periodic pattern of columnar-to-crescent grains. The aspect ratios of the columnar grains mostly exceed 5, 
+with those of crescent grains close to 1. Moreover, all the grains observed from the XOZ plane show aspect ratios close to 1. The 
+histograms of grain aspect ratio shown in Fig. 3 d-e are utilized to quantify the effect of heat treatment on grain morphology. As shown 
+in Fig. 3 d, AB and HT specimens similarly contain 89 % and 83 % of large columnar grains within XOY planes, featuring aspect ratios 
+greater than 2. Besides, Fig. 3 e further demonstrates that when viewed from the XOZ plane, the aspect ratios for all grains are close to 
+1, without the feature of large columnar grains. Those experimental observations are consistent with the expectation in Fig. 1 e. Within 
+the XOZ plane, AB and HT specimens show comparable proportions of crescent grains with aspect ratios less than 2. Thus, the 
+quantitative comparisons between the AB and HT states indicate that heat treatment has minimal influence on grain morphology. 
+Statistically, within the XOZ plane, the average grain size is 8.2 μm for the AB state and 8.8 μm after heat treatment. Besides, within the 
+XOY plane, the average grain sizes are 14.5 μm (AB) and 13.5 μm (HT). Hence, the effect of heat treatment on average grain size is less 
+than 10 %, possibly because the heat treatment temperature is insufficient to promote grain growth.
+3.2.2. Representative volume element
+To reflect the distinctive columnar-to-crescent grain distribution in LPBF superalloys, a representative volume element (RVE) is 
+constructed within a domain of 330 μm × 330 μm. As shown in Fig. 4 a-b, the RVE is selected as a single periodic structure for 
+columnar-to-crescent grains, including a single columnar grain and surrounding crescent grains. As demonstrated in Fig. 4 c, the grain 
+size distributions of simplified RVE and original EBSD are similar in statistics, suggesting that the selected RVE is representative. 
+Moreover, as depicted in Appendix B, the simplified RVE closely resembles the orientation distribution of the original EBSD data. It 
+should be noted that the same RVE is used for both AB and HT specimens, since no significant changes in grain orientation and 
+morphology occur during the heat treatment, as demonstrated in Section 3.2.1. As illustrated in Fig. 4 e, for the finite element model 
+with 300 × 300 hexahedral elements, uniform displacement is applied on the BC2 under horizontal tension, and BC1 under vertical 
+tension, respectively, while the BC4 and BC3 opposite to the loaded ones are fixed in normal direction as constraints in each case.
+By combining Fig. 4 b and d, the grain size mapped with crystal orientations indicates that the large columnar grain shows [001] 
+preferred orientation along the BD. In contrast, the crescent grains show randomly distributed crystal orientations. To identify the soft 
+and hard zones within the RVE, horizontal or vertical tension is applied to each element, and the stress-strain response of each element 
+is obtained based on local single-crystal CPFE simulation, without running the finite-element computation for the whole RVE. Taking 1 
+% plastic strain as the criterion of yielding for each element, the local yield strength is mapped in Fig. 4 f and g, indicating that the 
+columnar grains are ‘softer’ than crescent grains under both horizontal and vertical tensions. Similarly, this trend resembles the 
+uniaxial tensile results of FCC single-crystals, where [100] and [111] orientations exhibit the lowest and highest yield strength 
+respectively, with [110] falling between the two (Gupta and Bronkhorst, 2021; Reed, 2008). Therefore, under both horizontal and 
+vertical tensions, the large columnar grains and crescent grains can be regarded as the ‘soft’ and ‘harder’ zones, respectively.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+9
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+3.2.3. Strain, stress and GND distributions
+As listed in Table S1, the major difference between the simulations at RT and ET is that, more pronounced dislocation annihilation 
+is incorporated at ET, in the evolution equation of ρs
+SSD (Eq. (11)). In CPFE simulations, increasing yc is the only approach to reproduce 
+the strain softening at ETs, which is observed in experimental stress-strain responses (Fig. 2 c). Physically, the dislocation annihilation 
+manifested as the dislocation climb or diffusion, etc., is highly dependent on temperatures (Galindo-Nava and Rivera-Díaz-del-Castillo, 
+2012). As a thermally activated process, the dislocation annihilation rate is amplified at ETs (Huang et al., 2009), resulting in a higher 
+yc value.
+The simulated strain distributions within RVE are exhibited in Fig. 5. At both RT and ETs, the strains normal to the tensile directions 
+are significantly localized at the large columnar grain under horizontal tension, whereas the strains are more uniformly distributed 
+under vertical tension (Fig. 5 a-b). Those strain distributions under horizontal and vertical tension align well with the measurement 
+results in both distribution patterns and magnitudes, as validated in Appendix C. Meanwhile, the strain partitioning between columnar 
+and crescent grain zones is quantified in Fig. 5 a3 and b3. Under the horizontal tension, point A within the columnar grain region 
+shows a local strain higher than the global average strain, whereas point B within the crescent grain region displays a local strain lower 
+than the global strain. Notably, the strain partitioning degree increases with global strain under the horizontal tension. In contrast, the 
+Fig. 5. Strain localization and partitioning behaviour for columnar-to-crescent grains under AB state: (a1-a2, b1-b2) Distributions of normal strains 
+along the tensile directions for horizontal and vertical tensions at RT and ET (10% global strain). (a3, b3) Local strains evolving with global 
+deformation, which are extracted at points A and B marked in a1, corresponding to the columnar grain zone and crescent grain zone, respectively. 
+The green dotted lines represent the global strains averaged within the RVE, which are used to provide a reference for strain localization. Spe￾cifically, strain localization is characterized by local strains at sites A or B exceeding the global strain indicated by green dotted lines. (c) A simplified 
+mechanical model for columnar-to-crescent grains under horizontal and vertical tension.
+10
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+local strains in columnar and crescent grains are comparable to the global strain under the vertical tension, without the enhancement 
+in strain partitioning during the whole loading process.
+The schematic diagram shown in Fig. 5 c helps to understand the difference in strain patterns between horizontal and vertical 
+tensions. As depicted in Fig. 4 f and g, according to the distributions of local yield strength, the columnar and crescent grains can be 
+recognized as ‘soft’ and ‘hard’ zones, respectively. Under horizontal tension, due to the absence of soft-to-hard transition within each 
+cross-section normal to tensile direction, the columnar and crescent grains are subjected to similar σxx, which is the dominant stress 
+component under horizontal tension. Hence, the soft and hard zones can deform independently without significant mutual constraints, 
+resulting in the strain εxx localization within the soft columnar grain (Fig. 5 c1). This insight can be reinforced by previous studies on 
+strain partitioning of soft-to-hard layered materials under the same loading condition (Zhai et al., 2024). In contrast, under the vertical 
+tension, the σyy is re-distributed within each cross-section normal to tensile direction, to maintain the deformation coordination be￾tween soft and hard zones. Due to the mutual constrain between both, there is no significant strain εyy partitioning, which is consistent 
+with the previous works regarding the soft-to-hard layered materials under vertical tension (Luo et al., 2022; Zhou et al., 2024).
+Moreover, under the horizontal tension, the strain localization at columnar grain is more pronounced at ET, compared with that at 
+RT (Fig. 5 a1, b1). The quantification analysis in Fig. 5 a3 and b3 also indicates that the strain partitioning degree between the crescent 
+and columnar grains is significantly enhanced at ET, compared with that at RT. According to Eq. (11), a higher dislocation annihilation 
+rate at ETs could reduce the SSD density and weaken the dislocation strengthening, especially for the columnar grain region with strain 
+localization. Consequently, compared with soft grains, the applied deformation more significantly softens the columnar grain at ET 
+under horizontal tension throughout the whole deformation process.
+The normal stresses along tensile directions distributed across columnar-to-crescent grains are exhibited in Fig. 6. As depicted in 
+Fig. 6 a1 and b1, under the horizontal tension, the stresses exhibit relatively uniform distributions across columnar-to-crescent grains 
+at both RT and ETs. At each cross-section normal to the horizontal tension direction, the absence of a soft-to-hard transition results in a 
+nearly uniform distribution of normal stresses along the tensile direction, without the stress re-distribution typically required to ensure 
+deformation coordination along the tensile direction. This simulation result also aligns well with the previous study on layered soft-to￾hard materials under horizontal tension (Zhai et al., 2024). In contrast, the vertical tension features stress localization at the crescent 
+grain zone (Fig. 6 a1 and b1), resulting from the stress redistribution induced by deformation coordination (Fig. 5 c2). Under the 
+Fig. 6. Stress distributions within columnar-to-crescent grains (5% global strain): (a) Patterns of normal stress along the tensile directions under 
+horizontal and vertical tensions at RT. (b) Stress patterns under horizontal and vertical tensions at ET. Both a and b suggest that the stresses are 
+concentrated within the region of the crescent grains under vertical tension, and uniformly distributed under horizontal tension.
+11
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+vertical tension, the tensile load is parallel to the lamellar soft and hard zones, in which more elastic strains and corresponding stresses 
+need to be assigned to the hard regions of crescent grains (Li et al., 2020), to ensure the deformation coordination. Moreover, 
+comparing Figure 6 a2 with b2, the enhanced strain localization at the columnar grain under ET condition amplifies the stress 
+localization at crescent grains.
+The transition from soft to hard zones further causes strain gradients and GNDs, which provide extra strengthening to the AM 
+superalloys (Gao and Huang, 2003; Gao et al., 2023; Li et al., 2020). Thus, it is essential to understand the GND effects arising from the 
+columnar-to-crescent grains. As demonstrated in Fig. 5 a-b, the horizontal tension with larger strain gradients across soft to hard zones, 
+is selected to display the GND patterns and compare with the experiments. In simulations, the scalar GND density is defined as the 2nd 
+norm of GND densities at individual slip systems (Pantleon, 2008; Xu, 2021): 
+Fig. 7. Comparison of scalar GND density patterns between EBSD and CPFE under horizontal tension: (a, b) Simulated scalar GND density dis￾tributions at 10% global strain same with c and d. (c, d) Experimental scalar GND density distributions, which are obtained from EBSD results. (e, f) 
+Quantitative comparisons of GND density between simulations and experiments, in which each point on the curve is averaged over the vertical 
+direction to represent the mean trend.
+12
+⎧
+⎪⎪⎪⎪⎪⎪⎨
+⎪⎪⎪⎪⎪⎪⎩
+ρGND =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑Nslip
+s=1
+( (
+ρs
+GNDe)2 + (
+ρs
+GNDs)2)
+√√√√
+ρSSD =
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+∑Nslip
+s=1
+(
+ρs
+SSD)2
+√√√√
+(15) 
+where scalar SSD density is defined with the same expression. As shown in Fig. 7 a-b, the GND patterns at RT and ET exhibit distinctive 
+characteristics under horizontal tension. Driven by strain gradients across soft to hard zones, the GND is localized around the columnar 
+grain at ET. In contrast, at the RT condition, the GND is localized at the grain boundaries within the crescent grain regions, which is 
+induced by the strain gradient at grain boundaries where grain orientation changes (Zhong et al., 2024). Compared with ET, the lower 
+EL and weaker strain localization within columnar grain at RT, contribute to the change of scalar GND patterns.
+Furthermore, the scalar GND patterns obtained from EBSD are used to validate the simulation results. As depicted in Fig. 7 c-d, GND 
+density estimated from EBSD shows comparable magnitude with those in CPFE simulations. Similarly, the GND densities exhibit 
+relatively higher magnitudes at ET, compared with those at RT. With the positions of columnar-to-crescent grains indicated by grain 
+aspect ratio maps, the GND densities are localized at the columnar grain regions at ET, and exhibit a more diffused distribution within 
+crescent grain regions at RT, which are consistent with the simulated GND patterns shown in Fig. 7 a-b. The quantitative comparison 
+shown in Fig. 7 e-f demonstrates good agreement between simulation and experiment. Both CPFE-based and EBSD-based GND den￾sities exhibit a peak in the columnar grain region at ET, while showing a more uniform distribution at RT. Moreover, the GND densities 
+obtained from both methods are of comparable magnitude, demonstrating the high accuracy of simulated strain gradients and GNDs.
+The differences in GND density between the experiment and simulation can be attributed to two main factors. First, the CPFE model 
+resolves all components of the Nye tensor, whereas the EBSD-based algorithm captures only 5 components. This discrepancy in the 
+GND calculation methods contributes to the relative error. Second, although both the CPFE and EBSD domains exhibit similar features, 
+such as the transition of columnar-to-crescent grains, different orientation distributions are used in the simulation and experiment. 
+This primarily arises from the lack of EBSD data for the same area in the undeformed state.
+4. Discussion
+4.1. Mechanism for anomalous anisotropy from RT to ET
+The analysis on the number of activated slip systems is utilized to interpret the anisotropy at RT. As shown in Fig. 8 a-b, both 
+horizontal and vertical tension show more activated slip systems within the columnar grain, attributed to the lower local yield strength 
+(Fig. 4 f-g). Under the same global strain, a smaller number of activated slip systems suggest less complete plastic deformation, which 
+in turn contributes to higher strength. Based on the statistical results shown in Fig. 8 c, vertical tension exhibits a higher average 
+number of activated slip systems within the RVE, along with a more dispersed distribution as indicated by a higher standard deviation. 
+Hence, the more complete slip activation under vertical tension results in lower strength at RT.
+The transition of anisotropic behaviour at ETs is understood from the perspective of dislocation strengthening. Compared with the 
+cases of RT with strain hardening, enhanced dislocation annihilation is essential to capture the strain softening at ETs for both AB and 
+HT specimens (Fig. A.1), which could be the primary contributor of anomalous anisotropy at ETs. The temperature dependence of 
+dislocation annihilation will be elaborated in Section 4.4. On the other hand, as depicted in the subsequent GND analysis in Section 4.3
+(Fig. 14 a-b), the gradient of grain size-induced GNDs account for less than 10 % of the total dislocation density at the early stage of 
+deformation under both RT and 900 ◦C. Moreover, from the stress-strain responses in the cases with and without GNDs (Fig. 14 d-e), 
+the GND densities have a neglectable effect on the strength and strain hardening rate at 2 % global strain. Each evidence demonstrates 
+that SSDs dominate the dislocation strengthening at the early stage of deformation.
+Hence, the incremental scalar SSD induced by applied deformation, is chosen to elaborate the mechanism of temperature￾dependent anisotropic behaviour. In Section 4.4, the Arrhenius-type formula is utilized to capture the temperature dependence of 
+critical annihilation distance yc. Despite LPBF-induced initial SSDs, the incremental SSD densities are solely caused by the applied 
+deformation during the tension of specimens, which are derived from Eq. (11). As the initial SSDs are assumed to be uniformly 
+distributed in CPFE modeling, the incremental SSDs can represent the distribution of total SSDs. The scalar SSD is defined in Eq. (15), 
+which is calculated using the SSDs resolved at individual slip systems.
+Moreover, it is necessary to elaborate on the initial SSD and GND densities induced by the LPBF process. The thermal gradient 
+during the LPBF process produces large thermal stresses, which locally causes plastic deformation and the formation of corresponding 
+SSDs (Eq. (11)). Meanwhile, due to the non-uniform distribution of thermal stresses, the GNDs are incorporated to accommodate the 
+gradient of plastic deformation (Eq. (12)). Hence, both SSDs and GNDs co-exist in the AB states. Furthermore, the initial GND densities 
+are directly extracted from EBSD data, while the uniformly distributed initial SSDs are calibrated by comparing the yield strength of AB 
+and HT specimens.
+As shown in Fig. 9 a, at the RT with smaller dislocation annihilation, the incremental scalar SSD is concentrated at columnar grain 
+under horizontal tension, but exhibits uniform distribution under vertical tension. According to Eq. (11), when the yc is minimal at RT, 
+the slip-induced dislocation accumulation produces SSD patterns that well resemble the strain distributions exhibited in Fig. 5 a-b. On 
+the contrary, after incorporating more significant dislocation annihilation at ET, both horizontal and vertical tension show negative 
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+13
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+14
+Fig. 8. Distributions of the number of activated slip systems at the global strain of 1%: (a–b) under tension applied along the horizontal and vertical directions in the AB-RT states, respectively. The slip 
+system is considered to be activated if the accumulated slip γs = ∫
+γ˙
+s
+dt exceeds 2%, where the slip rate γ˙s is provided by Eq. (9). (c) The histogram for the number of activated slip systems shown in a-b, 
+which is extracted from all the elements within RVE. The μ and σ represent the average and standard deviation, respectively.
+increments of SSD, and display a trough of SSD density within the columnar grain. Based on the governing equation of SSD density (Eq. 
+(11)), when the annihilation term dominates at ETs in the presence of AM-induced initial SSD, the SSD density could decrease with 
+global strain under the applied deformation. The reduction in SSD density at 900◦C will be validated against the subsequent TEM 
+observation. As quantitatively shown in Fig. 9 c, the horizontal tension exhibits a peak of incremental SSD within the columnar grain at 
+RT, contributing to higher average SSD density, larger average slip resistance τs
+c, and higher strength under horizontal tension at RT, 
+compared with vertical tension. Furthermore, regarding the horizontal tension at ET, the peak of incremental SSD changes into a 
+trough value, as the strain localization within the columnar grain (Fig. 5 b1) enhances the dislocation annihilation, according to Eq. 
+(11). However, for the vertical tension, the enhancement in dislocation annihilation at ET has a minor effect on the trend of incre￾mental SSD distributions. Therefore, the dislocation annihilation leads to a more significant reduction in dislocation strengthening 
+within the columnar grain under horizontal tension, resulting in a lower YS under horizontal tension compared with the case under 
+vertical tension at ET.
+The TEM characterization is utilized to validate the simulated dislocation patterns exhibited in Fig. 9. As shown in Fig. 10, 
+compared with the initial dislocation density at AB state (Fig. 3 a3), the applied deformation increases the dislocation density at RT, 
+but reduces the dislocation density at ET within both columnar and crescent grain regions, which is consistent with the trends in 
+simulations. Moreover, under the horizontal tension at RT, the dislocation density in large columnar grain is higher than that in 
+crescent grains (Fig. 10 a and c), whereas the large columnar grain shows lower dislocation density compared with the crescent grains 
+at ET (Fig. 10 b and d). Those TEM observations align with the simulated dislocation density patterns.
+As demonstrated in Section 3.1, with the temperature increasing, the EL under horizontal tension tends to be lower than that under 
+vertical tension. The SED as a widely recognized damage indicator for predicting the microcrack nucleation, is employed to understand 
+this trend. As shown in Fig. 11, under both RT and ET, the horizontal tension shows more pronounced SED localization at the columnar 
+grain. Furthermore, by comparing Fig. 11 a1 with b1, the SED localization within the columnar grain is more significant at ET. As 
+shown in Eq. (13), the SED is derived from plastic dissipative energy that is calculated using stress and plastic strain tensors. Under 
+horizontal tension, the average stress within columnar grains is comparable with that in crescent grains to maintain the force balance. 
+Hence, without the deformation coordination, the dislocation annihilation-assisted strain softening within columnar grain leads to 
+more significant SED or damage localization under the horizontal tension at ET. As a result, compared with vertical tension, the 
+horizontal one exhibits lower EL at higher temperatures with enhanced dislocation annihilation.
+The EBSD analysis is used to validate the damage distributions shown in Fig. 11. As shown in Fig. 12 a, the fracture passes through 
+Fig. 9. Distributions of incremental scalar SSD density induced by applied deformation (global strain 2%): (a, b) Patterns of incremental SSD 
+densities at RT and ET for both horizontal and vertical tensions, suggesting that the incremental SSD under horizontal tension is concentrated at the 
+columnar grain at RT, but exhibits low incremental SSD within columnar grain at ET. (c) The incremental SSD density distribution along the 
+horizontal direction across columnar and crescent grains. For each point on the curves, the data are averaged over the vertical direction within RVE 
+to represent the mean trend along the horizontal axis. By comparing the AB-RT-H and AB-ET-H, the peak of incremental SSD density within the 
+columnar grain changes into a trough value, after enhancing the dislocation annihilation rate at ET.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+15
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+Fig. 10. Bright-field TEM images for AB-H specimens at RT and ET, under the comparable deformation level with Figure 9: (a, c) High dislocation 
+density within columnar grains and crescent grains after the deformation at RT, respectively. (b, d) Low dislocation density within columnar and 
+crescent grains after the deformation at ET.
+the large columnar grains under the horizontal tension at ET. Besides, several long cracks can be found within the columnar grains near 
+the fracture surface, indicating that the damage is primarily localized within columnar grains. Moreover, under the vertical tension 
+with much larger EL, dense small cracks can be found within the regions of crescent grains (Fig. 12 b), with some long cracks initiating 
+at columnar grains, suggesting a more diffused damage distribution. Those experimental observations are consistent with the simu￾lation shown in Fig. 11 b. Therefore, both SED distributions in CPFE simulation and the EBSD analysis of fractured specimens 
+consistently indicate that the maximum damage and EL under horizontal tension are primarily governed by strain localization within 
+columnar grains. In contrast, under vertical tension, maximum damage and cracking initiated at crescent grains dominate the EL and 
+failure behaviour.
+4.2. Mechanism for relaxation of strength anisotropy after heat treatment
+The CPFE simulations are further employed to understand the mechanisms for the relaxation of strength anisotropy after heat 
+treatment. As demonstrated in Fig. 3, the HT process can eliminate LPBF-induced initial GNDs, initial SSDs, and residual deformation 
+(Fp0), without altering the grain orientations and morphology. Based on the algorithm described in Section 2.4, the initial GND and 
+residual deformation obtained from EBSD are shown in Fig. 13 d-e. The initial GNDs localized at grain boundaries introduce aniso￾tropic initial dislocation strengthening, which more significantly enhances the YS for horizontal tension at RT, compared with vertical 
+tension (Toursangsaraki et al., 2024). Meanwhile, the LPBF-induced residual strains sharing a similar inhomogeneous pattern with 
+initial GNDs, also contribute to enhancing the anisotropy. Moreover, the initial SSD with uniform distribution in CPFE simulations 
+amplifies the intrinsic texture-induced anisotropy for columnar-to-crescent grains (Herath et al., 2024). In Fig. 13 a, regarding the 
+anisotropy at RT, the initial GND, SSD, and residual deformation are individually incorporated into the CPFE simulations, with the HT 
+state as the baseline. As marked in Fig. 13 a, the anisotropy indicator Δ is defined as the strength difference between horizontal tension 
+and vertical tension. As quantified in Fig. 13 b, the contributions to the anisotropy enhancement from HT to AB followed the order of 
+residual deformation > initial SSD > initial GND at the RT condition.
+At the ET condition, the contributions of LPBF-induced factors on anisotropy enhancement are shown in Fig. 13 c. The residual 
+deformation and initial GND tend to increase the anisotropy, resembling the behaviour observed at RT. In contrast to the trend at RT, 
+the anisotropy at ET is significantly reduced because of the initial SSD. As demonstrated in Fig. 9, the enhanced dislocation annihi￾lation at the columnar grains induces the transition in anisotropy behaviour at ETs, under the prerequisite of enabled initial SSD. In 
+other words, the incremental SSD cannot be negative after deformation, if no initial SSD exists. Hence, the initial SSD is the necessary 
+16
+condition to cause a higher YS under vertical tension at ET, therefore significantly contributing to the reduction of anisotropy at ET.
+4.3. Effect of GND evolution
+Since the LPBF-induced columnar-to-crescent grains can be regarded as a kind of lamellar gradient microstructures (Li et al., 2020; 
+Fig. 11. Distributions of SED as a damage indicator (10% global strain) in AB state: (a) Horizontal and vertical tension at RT. (b) Horizontal and 
+vertical tension at ET.
+Fig. 12. Grain aspect ratio maps for the microstructures near the fracture in AB specimens at ET (900◦C): (a) Under horizontal tension, indicating 
+that the fracture occurs within columnar grains. (b) Vertical tension, suggesting dense small cracks within the crescent grain regions. The grain 
+aspect ratio maps are used to indicate the positions of columnar grains.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+17
+Zhu and Wu, 2023), it is essential to understand the extra strengthening effect contributed by strain gradients and GNDs. To analyze 
+the impact of GND evolution during the deformation, the ratio of GND density to the total dislocation density is defined as: 
+rGND = ρGND
+ρGND + ρSSD
+(16) 
+where the scalar GND and SSD are defined using the L2 norm (Eq. (15)).
+The GND strengthening effects at different temperatures and loading directions are shown in Fig. 14. As depicted in Fig. 14 b, under 
+the RT with minor dislocation annihilation, the accumulated SSDs constitute most of the total dislocations. Compared with GNDs, the 
+higher accumulation rate of SSDs results in rGND decreasing with the global strain. In contrast, as shown in Fig. 14 a, after incorporating 
+SSD annihilation at ET, GNDs exhibit an accumulation rate higher than SSD, leading to rGND increasing with the global strain. As a 
+result, the extra strengthening induced by GND has a larger impact on stress-strain responses at ET (Fig. 14 d-e). Moreover, by 
+comparing Fig. 14 a3 with c, the strain gradients induced by columnar-to-crescent grains induce higher rGND around the columnar 
+grain. The reason is that such grain distribution leads to more significant strain localization within columnar grains under horizontal 
+tension, as demonstrated in Fig. 5 a-b. Hence, as shown in Fig. 14 e, the GND provides more extra strengthening under horizontal 
+tension at ET.
+4.4. Threshold temperature for the anisotropy transition
+The CPFE model is further used to determine the threshold temperature for the occurrence of anisotropy transition. As previously 
+demonstrated, the dislocation annihilation mechanism dominates the anomalous anisotropy. Since the dislocation annihilation is a 
+thermally activated process (Huang et al., 2009), the parameter yc governing the dislocation annihilation rate in Eq. (11), could 
+monotonically increase with temperature. As schematized in Fig. 15 a, the normal (horizontal strength > vertical strength) and 
+anomalous (vertical strength > horizontal strength) anisotropy occurs along with the strain hardening (high yc) and strain softening 
+(low yc) at RT and ET, respectively. Hence, there should be a threshold value of yc, at which the horizontal and vertical tensions have 
+the same strength with the absence of strain hardening or softening. Since SSDs mainly contribute to the strengthening at the early 
+stage of deformation, regarding the yc below and beyond the threshold at RT (strain hardening) and 900 ◦C (strain softening), the 
+overall SSD density tends to increase and decrease with slip accumulation, respectively. Therefore, based on Eq. (11), in the presence of 
+Fig. 13. Contribution of individual LPBF-induced factors to anisotropy from the HT to AB states: (a) Simulated stress-strain responses obtained from 
+different comparative cases, with HT state as the baseline. The initial SSD, initial GND, and Fp0 are individually incorporated in CPFE simulations. 
+The parameter Δ in each case is defined as the strength difference between horizontal and vertical tension at 5% global strain. (b) Variation of Δ 
+under different LPBF-induced factors at RT. (c) Variation of Δ under different LPBF-induced factors at ETs. (d, e) The initial scalar GND density and 
+residual strain distributions at the AB state, which is estimated using EBSD data.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+18
+initial SSD with uniform distribution at AB state, the threshold value of yc should satisfy the condition that ρ˙s
+SSD identically equals 0: 
+˙ρs
+SSD =
+(
+K
+√̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+⃒
+⃒ρs
+SSD
+⃒
+⃒ + ⃒
+⃒ρs
+GNDe
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅ ⃒
+⃒ + ⃒
+⃒ρs
+GNDs
+⃒
+⃒
+̅
+− 2yc,threshold
+⃒
+⃒ρs
+SSD
+⃒
+⃒
+) |γ˙
+s
+|
+b = 0 (17) 
+Due to the (|γ˙
+s
+|/b) > 0 during the deformation, the following term should equal 0 when yc reaches the threshold value: 
+(
+K
+√̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+⃒
+⃒ρs
+SSD
+⃒
+⃒ + ⃒
+⃒
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+ρs
+GNDe
+⃒
+⃒ + ⃒
+⃒ρs
+GNDs
+⃒̅̅̅̅
+⃒
+̅
+− 2yc,threshold
+⃒
+⃒ρs
+SSD
+⃒
+⃒
+)
+= 0 (18) 
+Then, the threshold value of yc can be expressed as follows: 
+yc,threshold = K
+̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+ρs
+SSD,initial +
+⃒
+⃒
+⃒ρs
+GNDe,initial
+⃒
+⃒
+⃒ +
+⃒
+⃒
+⃒ρs
+GNDs,initial
+⃒
+⃒
+⃒
+√ /(2ρs
+SSD,initial)
+(19) 
+Fig. 14. Deformation-induced GND evolution, and its effects on stress-strain responses: (a) The rGND evolution in the case of AB-ET-V, suggesting 
+that the magnitude of rGND increases with global strain ε at ET. (b) The rGND evolution in the case of AB-RT-V, indicating that rGND is lower in the 
+whole deformation process, and tends to decrease with global strain. (c) The rGND pattern in the case of AB-ET-H. Compared with a3, the horizontal 
+tension produces higher GND density and larger rGND. (d, e) Comparisons of simulated stress-strain responses with/without GND evolution, indi￾cating that the deformation-induced GND offers more extra strengthening at ET, particularly under horizontal tension.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+19
+where yc < yc,threshold and yc > yc,threshold correspond to SSD density increasing and decreasing with resolved shear strain, respectively. 
+Additionally, as demonstrated in Fig. 13 b and Table S1, the initial GND with a magnitude lower than SSD can be neglected. Hence, the 
+slip system-dependent GND in Eq. (19) can be eliminated: 
+yc,threshold ≈ K
+√̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅̅
+ρs
+SSD,initial
+̅/(2ρs
+SSD,initial)
+(20) 
+where ρs
+SSD,initial is uniformly distributed across slip systems. Regarding the stress-strain responses exhibited in Fig. 2, parameter yc 
+beyond and below the threshold correspond to the strain softening at ET, and strain hardening at RT, respectively (Fig. 15 a). 
+Furthermore, the classic Arrhenius equation is employed to capture the temperature-dependent yc: 
+yc = D0exp(
+− RT
+Q )
+(21) 
+where D0 and Q are pre-factor and activation energy, and R is the ideal gas constant. Those two parameters can be calibrated based on 
+logarithmic linear regression (Guo et al., 2021), using the values of yc at RT and ET (900 ◦C), respectively.
+The calibrated yc as a function of temperature is plotted in Fig. 15 b. Then, based on Eq. (20), the threshold temperature is found as 
+600◦C. Accordingly, the CPFE simulations and tensile tests are conducted under 600◦C to validate the prediction. As shown in Fig. 15 c, 
+both simulations and experiments show comparable stress-strain responses, in which the anisotropy disappears with the absence of 
+both strain hardening and strain softening. These features in experiments align with the predictions. As quantitatively shown in Fig. 15
+d, the difference of YS between horizontal and vertical tensions is minor in both simulations and experiments, which provides effective 
+validation for the prediction of threshold temperature.
+5. Conclusions
+In this paper, an anomalous anisotropic behaviour from RT to ETs in a solid-solution-strengthened superalloy LPBF superalloy 
+featuring columnar-to-crescent grains is experimentally revealed, with the underlying mechanisms elucidated through CPFE 
+Fig. 15. Determination of threshold temperature for the transition of anisotropy: (a) Schematic diagram for the yc-induced transition of anisotropic 
+behaviour. (b) Parameter yc varying with temperature, calculated using the Arrhenius equation, suggesting that the threshold temperature is 600◦C 
+for the AM superalloy in this work. (c) Experimental validation for the prediction of threshold temperature, note that there are two specimens in 
+each condition for the validation. (d) Statistics on the YS under horizontal and vertical tensions, suggesting that the anisotropy disappears at 600◦C 
+in both simulations and experiments, where the predictions are in good agreement with experiments.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+20
+simulations. The main conclusions of this study can be summarised as follows. 
+1. Compared with vertical tension, horizontal tension shows YS higher at RT, but exhibits lower YS at ET (900 ◦C). The transition of 
+anisotropy from RT to ET is governed by the temperature-dependent dislocation annihilation within the columnar grains, with the 
+threshold temperature predicted to be 600 ◦C.
+2. Compared with HT state, the enhancement of anisotropy in AB state is attributed to several LPBF-induced factors, ranked in order of 
+impact: residual deformation > initial SSD > initial GND at RT, and initial SSD > initial GND > residual deformation at ET.
+3. Damage is localized within large columnar grains under horizontal tension, resulting in lower EL compared to vertical tension in 
+both the AB and HT states. This effect becomes more pronounced at ETs due to enhanced damage localization facilitated by 
+dislocation annihilation.
+4. The strain gradient provides a more significant strengthening effect at ETs owing to a high GND ratio, particularly in horizontal 
+tension, where the higher GND density arises from columnar-to-crescent grain structures.
+This paper presents an integrated work for understanding and predicting the anisotropic behaviour of AM superalloys. In the future 
+study, the grain morphology could be tailored using AM technique, to achieve the tunable temperature-dependent anisotropy adapted 
+to various applications.
+CRediT authorship contribution statement
+Zhenhua Zhang: Writing – original draft, Methodology, Investigation, Conceptualization. Zixu Guo: Writing – original draft, 
+Investigation, Conceptualization. Quanquan Han: Writing – review & editing, Validation, Investigation, Funding acquisition. Daijun 
+Hu: Writing – original draft, Methodology. Shiwei Wu: Writing – review & editing. Haiyang Fan: Resources. Erlei Li: Methodology. 
+Ming Li: Validation. Yilun Xu: Investigation. Shoufeng Yang: Methodology. Chuanzhen Huang: Conceptualization. Wentao Yan: 
+Writing – review & editing, Investigation, Funding acquisition.
+Declaration of competing interest
+The authors have no conflict of interest.
+Acknowledgements
+Prof. Quanquan Han acknowledges the financial support from the Natural Science Foundation of Shandong Province (Grant No. 
+ZR2023YQ053, ZR2022ZD08) and the Key R&D Program of Shandong Province (Grant No. 2024KJHZ027). Prof. Wentao Yan ac￾knowledges the financial support by the Ministry of Education, Singapore, under its Academic Research Fund Tier 2 (MOE￾T2EP50121-0017). This research is also supported by A*STAR under its Advanced Models for Additive Manufacturing (AM2) pro￾gramme (Award M22L2b0111). Any opinions, findings and conclusions or recommendations expressed in this material are those of the 
+author(s) and do not reflect the views of the A*STAR. The authors acknowledge Prof. Xiaojun Yan and Prof. Dawei Huang from Beihang 
+University for their assistance on data processing, under the National Major Science and Technology Project (J2019-IV-0007-0075).
+Appendix A. Parameters calibration
+The stress-strain curves under horizontal tension exhibited in Fig. 2, are utilized to calibrate the CPFE parameters at RT and ET, 
+respectively. Specifically, the curves of HT specimens are employed to calibrate most of the parameters, except for LPBF-induced initial 
+SSD. Then, after the incorporation of LPBF-induced initial GND and residual deformation obtained from EBSD results, the curves of AB 
+specimens are utilized to calibrate the intensity of initial SSD that is uniformly distributed within the simulation domain. With all the 
+calibrated parameters listed in Table A.1, the stress-strain curves under vertical tension are employed to validate the CPFE model. As 
+shown in Fig. A.1, CPFE simulations can reproduce the two key features of anomalous anisotropy summarized in Section 3.1 (items 1 
+and 2). 
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+21
+Fig. A.1. Comparison between simulated and experimental stress-strain responses: (a) Comparison at RT; (b) Comparison at ET. Both a and b 
+indicate that the CPFE results are in good agreement with the experimental results.
+Table A.1 
+Calibrated parameters in the CPFE model.
+Symbol Value Unit Calibration method
+Elastic properties C11 
+C12 
+C44
+280 (RT) / 105 
+(900◦C) 
+103 (RT) / 75 
+(900◦C) 
+57.5 (RT) / 42 
+(900◦C)
+GPa Elastic regime of stress-strain curves
+Flow rule n 10 - Our previous work (Hu et al., 2024a)
+γ˙0 0.001 s
+-1
+τs
+0 250 (RT) 
+50 (900◦C)
+MPa Fitting the YS of horizontal tension HT specimens without initial 
+dislocations
+Temperature-dependent dislocation 
+annihilation
+D0 0.0238 μm Fitted based on the value of yc at RT and 900◦C
+Q 3866 J/ 
+mol
+Damage ξ 0.05 - From reference (Wan et al., 2014) for FCC alloys
+Gcr 10 (RT) 
+0.4 (900◦C)
+J m-2 Matching the EL of horizontal tension specimens
+Dislocation hardening φ0 0.45 (RT) 
+0.2 (900◦C)
+- Matching the YS of horizontal tension HT specimens
+yc 0.005 (RT) 
+0.016 (900◦C)
+μm Fitting the strain hardening / softening rate of horizontal tension 
+specimens
+K 0.18 - Our previous work (Guo et al., 2025) for FCC alloys
+χα
+s 1 (α = β), 1.4 (α ∕= β) - Our previous work (Hu et al., 2024a) for FCC alloys
+Initial 
+ρs
+SSD
+225 (AB) 
+10 (HT)
+μm-2 Matching the YS of AB specimens with initial dislocations, under 
+horizontal tension
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+22
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+Appendix B. Comparison of orientation distributions before and after simplification of RVE
+Fig. B.1
+Fig. B.1. Comparison between original EBSD and simplified RVE in terms of orientation distributions: The IPF maps show similar patterns 
+and magnitude before and after simplification, suggesting that the simplification of RVE in Figure 4 a-b is rational.
+Appendix C. Experimental strain distribution for model validation
+Fig. C.1
+23
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+Fig. C.1. Comparison of plastic strain distribution between experiment and simulation: (a,c) Experimental plastic strain distribution at 10% 
+global strain characterized using ex-situ EBSD, with the algorithm detailed in Section 2.3. The experimental characterization shows pronounced 
+strain localization within columnar grain under horizontal tension, while the vertical tension exhibits more uniformly distributed strains. Those 
+trends are consistent with CPFE simulation results. (b, d) Quantitative comparisons of strain distributions along horizontal distribution between a,c, 
+and Figure 5 b1-b2, where each point on the curve represents the averaged strain over vertical direction to show the mean trend. Those comparisons 
+indicate good agreement between the simulation and experiment in both distribution patterns and magnitudes under horizontal and verti￾cal tensions.
+Appendix D. Fractured surface morphology
+The SEM fractography (Fig. D.1) exhibits multi-source crack initiation and dimpled rupture, free from defect-induced microcracks 
+initiation. This implies that mechanical responses are dominated by LPBF-induced crystallographic texture and initial dislocation 
+density, rather than volumetric defects inherent to LPBF. 
+Fig. D.1. The fracture surface of AB and HT specimens tested under RT and vertical tension: (a) Overview of the AB-RT-V fracture surface; (b) 
+High-magnification view of a. (c) Overview of the HT-RT-V fracture surface. (d) High-magnification view of c.
+Appendix E. Additional TEM observations of the AB and HT specimens
+In addition to Fig. 3 a3 and b3, more TEM observations under the same conditions are conducted (Fig. E.1). This confirms that the 
+AB specimens generally exhibit a high density of dislocations, whereas the HT specimens show a significant reduction in dislocation 
+densities. Thus, although Fig. 3 a3 and b3 are not captured at the same location, they are representative to reflect the uniform 
+reduction in dislocation densities across the specimens upon heat treatment. 
+24
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+Fig. E.1. TEM images acquired from multiple regions of the AB and HT specimens.
+Data availability
+Data will be made available on request.
+References
+Acharya, A., Bassani, J.L., 2000. Lattice incompatibility and a gradient theory of crystal plasticity. J. Mech. Phys. Solids 48, 1565–1595.
+Adapa, V.S.K., Kalidindi, S.R., Saldana, C.J., 2025. Insights into the gamma prime precipitation behavior during heat treatment of additively manufactured nickel￾based superalloy. J. Alloys Compd. 1012, 178507.
+Addessio, F., Luscher, D., Cawkwell, M., Ramos, K., 2017. A single-crystal model for the high-strain rate deformation of cyclotrimethylene trinitramine including 
+phase transformations and plastic slip. J. Appl. Phys. 121.
+Arsenlis, A., Parks, D.M., 1999. Crystallographic aspects of geometrically-necessary and statistically-stored dislocation density. Acta Mater. 47, 1597–1611.
+ASTM, 2009. Standard test methods for elevated temperature tension tests of metallic materials, ASTM E21-09.
+ASTM, 2016. Standard specification for UNS N06002, UNS N06230, UNS N12160, and UNS R30556 Rod. B02.07.
+ASTM, 2021. Standard test methods for tension testing of metallic materials, ASTM E8 /E8M-21, West Conshohocken.
+Bayley, C.J., Brekelmans, W.A.M., Geers, M.G.D., 2006. A comparison of dislocation induced back stress formulations in strain gradient crystal plasticity. Int. J. Solids 
+Struct. 43, 7268–7286.
+Bean, G., McLouth, T., Witkin, D., Sitzman, S., Adams, P., Zaldivar, R., 2019. Build orientation effects on texture and mechanical properties of selective laser melting 
+Inconel 718. J. Mater. Eng. Perform. 28, 1942–1949.
+Beausir, B., Fundenberger, J., 2017. Analysis Tools for Electron and X-ray diffraction. ATEX-software. Universit´e de Lorraine-Metz, p. 201. www.atex-software.eu.
+Blakey-Milner, B., Gradl, P., Snedden, G., Brooks, M., Pitot, J., Lopez, E., Leary, M., Berto, F., Du Plessis, A., 2021. Metal additive manufacturing in aerospace: a 
+review. Mater. Des. 209, 110008.
+Chaboche, J.L., 1988. Continuum damage mechanics: part I—general concepts. J. Appl. Mech. 55, 59–64.
+Chen, Z., Chen, S., Wei, Z., Zhang, L., Wei, P., Lu, B., Zhang, S., Xiang, Y., 2018. Anisotropy of nickel-based superalloy K418 fabricated by selective laser melting. 
+Progr. Nat. Sci. 28, 496–504.
+Cui, L., Deng, D., Jiang, S., Peng, R.L., Xin, T., Zhang, H., Hegedüs, Z., Lienert, U., He, W., Moverare, J., 2023. New insights into the anisotropic ductility of additively 
+manufactured Inconel 718. Int. J. Plasticity 169, 103738.
+Dai, S., Hu, D., Grilli, N., Zou, S., Deng, Z., Yan, W., 2024. Anisotropic and high-temperature deformation behavior of additively manufactured AlSi10Mg: experiments 
+and microscale modeling. Addit. Manuf. 89, 104285.
+Dang, X., Li, Y., Zheng, J., Cui, L., Lu, K., Liang, X., Luo, S., Zhou, G., Jiao, Y., Dou, Y., Zhou, L., He, W., 2025. Shear banding mediated fracture mechanisms in 
+additively manufactured IN738 superalloys under low-strain-rate loading. Int. J. Plasticity 188, 104296.
+Dill, E.H., 2006. Continuum Mechanics: Elasticity, Plasticity, Viscoelasticity. Taylor & Francis.
+Farias, F.W.C., Duarte, V.R., Filho, J.D.C.P., Figueiredo, A.R., Schell, N., Maawad, E., Li, J.Y., Zhang, Y., Bordas-Czaplicki, M., Fonseca, F.M.A.D., Cormier, J., 
+Santos, T.G., Oliveira, J.P., 2024. High-performance Ni-based superalloy 718 fabricated via arc plasma directed energy deposition: effect of post-deposition heat 
+treatments on microstructure and mechanical properties. Addit. Manuf. 88, 104252.
+Galindo-Nava, E.I., Rivera-Díaz-del-Castillo, P.E.J., 2012. A thermostatistical theory of low and high temperature deformation in metals. Mater. Sci. Eng. 543, 
+110–116.
+Gao, H., Huang, Y., 2003. Geometrically necessary dislocation and size-dependent plasticity. Scr. Mater. 48, 113–118.
+25
+Gao, S., Li, Z., Van Petegem, S., Ge, J., Goel, S., Vas, J.V., Luzin, V., Hu, Z., Seet, H.L., Sanchez, D.F., Van Swygenhoven, H., Gao, H., Seita, M., 2023. Additive 
+manufacturing of alloys with programmable microstructure and properties. Nat. Commun. 14, 6752.
+Gokcekaya, O., Ishimoto, T., Hibino, S., Yasutomi, J., Narushima, T., Nakano, T., 2021. Unique crystallographic texture formation in Inconel 718 by laser powder bed 
+fusion and its effect on mechanical anisotropy. Acta Mater. 212, 116876.
+Gu, D., Shi, X., Poprawe, R., Bourell, D.L., Setchi, R., Zhu, J., 2021. Material-structure-performance integrated laser-metal additive manufacturing. Science 372.
+Guo, Z., Huang, D., Yan, X., 2021. Physics-based modeling of γ/γ′ microstructure evolution and creep constitutive relation for single crystal superalloy. Int. J. Plasticity 
+137, 102916.
+Guo, Z., Lu, X., Paramatmuni, C., Gao, H., Dunne, F.P.E., Yan, W., Zhang, Y.-W., Xu, Y., 2025. Slip system-resolved GNDs and SEDs: a multi-scale framework for 
+predicting crack nucleation in single-crystal metals. Acta Mater. 288, 120853.
+Guo, Z., Song, Z., Ding, X., Guo, K., Liu, H., Yan, H., Huang, D., Yan, X., 2023. Slip band evolution behavior near circular hole on single crystal superalloy: experiment 
+and simulation. Int. J. Plasticity 165, 103600.
+Guo, Z., Song, Z., Liu, H., Hu, D., Huang, D., Yan, X., Yan, W., 2024. A dislocation-based damage-coupled constitutive model for single crystal superalloy: unveiling the 
+effect of secondary orientation on creep life of circular hole. Int. J. Plasticity 173, 103874.
+Gupta, S., Bronkhorst, C.A., 2021. Crystal plasticity model for single crystal Ni-based superalloys: capturing orientation and temperature dependence of flow stress. 
+Int. J. Plasticity 137, 102896.
+Herath, C., Wijesinghe, K., Michopoulos, J.G., Arnold, S.M., Achuthan, A., 2024. Hierarchical deformation and anisotropic behavior of (α+β) Ti alloys: A 
+microstructure-informed multiscale constitutive model study. Int. J. Plasticity 183, 104163.
+Hu, D., Grilli, N., Yan, W., 2023. Dislocation structures formation induced by thermal stress in additive manufacturing: multiscale crystal plasticity modeling of 
+dislocation transport. J. Mech. Phys. Solids 173, 105235.
+Hu, D., Guo, Z., Grilli, N., Tay, A., Lu, Z., Yan, W., 2024a. Understanding the strain localization in additively manufactured materials: micro-scale tensile tests and 
+crystal plasticity modeling. Int. J. Plasticity 177, 103981.
+Hu, X., Guo, C., Huang, Y., Xu, Z., Shi, Z., Zhou, F., Li, G., Zhou, Y., Li, Y., Li, Z., Li, Z., Lu, H., Ding, H., Dong, H., Zhu, Q., 2024b. Liquid-induced healing of cracks in 
+nickel-based superalloy fabricated by laser powder bed fusion. Acta Mater. 267.
+Huang, M., Rivera-Díaz-del-Castillo, P.E.J., Bouaziz, O., van der Zwaag, S., 2009. A constitutive model for high strain rate deformation in FCC metals based on 
+irreversible thermodynamics. Mech. Mater. 41, 982–988.
+Kok, Y., Tan, X.P., Wang, P., Nai, M., Loh, N.H., Liu, E., Tor, S.B., 2018. Anisotropy and heterogeneity of microstructure and mechanical properties in metal additive 
+manufacturing: a critical review. Mater. Des. 139, 565–586.
+Kurz, W., Fisher, D., Rappaz, M., 2023. Fundamentals of Solidification, 5th fully revised edition. Trans Tech Publications Ltd, Baech. 
+Lemaitre, J., 1985. Coupled elasto-plasticity and damage constitutive equations. Comput. Methods Appl. Mech. Eng. 51, 31–49.
+Li, X., Lu, L., Li, J., Zhang, X., Gao, H., 2020. Mechanical properties and deformation mechanisms of gradient nanostructured metals and alloys. Nat. Rev. Mater. 5, 
+706–723.
+Liu, P.W., Wang, Z., Xiao, Y.H., Lebensohn, R.A., Liu, Y.C., Horstemeyer, M.F., Cui, X.Y., Chen, L., 2020. Integration of phase-field model and crystal plasticity for the 
+prediction of process-structure-property relation of additively manufactured metallic materials. Int. J. Plasticity 128, 102670.
+Liu, S., Xiong, Y., Zhao, J., Liu, B., Wu, W., Zhang, X., 2025. Nonlocal crystal plasticity and damage modeling of dual-heterostructured steel for strengthening and 
+failure analysis. Int. J. Plasticity 187, 104270.
+Liu, Z., Han, Q., Zhang, Z., Wang, L., Ma, T., Gao, Z., Song, B., Liu, H., Huang, C., Setchi, R., 2023. Design of a novel crack-free precipitation-strengthened nickel-based 
+superalloy and composites for laser powder bed fusion. Virtual Phys. Prototyp. 18.
+Lu, X., Chen, C., Zhang, G., Chiumenti, M., Cervera, M., Yin, H., Ma, L., Lin, X., 2023. Thermo-mechanical simulation of annealing heat treatment of Ni-based GH4099 
+superalloy made by laser powder bed fusion. Addit. Manuf. 73, 103703.
+Lu, X., Zhao, J., Wang, Z., Gan, B., Zhao, J., Kang, G., Zhang, X., 2020. Crystal plasticity finite element analysis of gradient nanostructured TWIP steel. Int. J. Plasticity 
+130, 102703.
+Luo, P., Wang, L., Li, D., Yang, J., Lv, X., 2022. Deformation and failure mechanism of horizontal soft and hard interlayered rock under uniaxial compression based on 
+digital image correlation method. Eng. Fail. Anal. 142, 106823.
+Lyu, T., Zou, Y., 2025. Remelting-based microstructure engineering in laser powder bed fusion: a case study in 316L stainless steel. Scr. Mater. 257, 116469.
+NASA, 2023. https://www.nasa.gov/centers-and-facilities/marshall/nasas-innovative-rocket-nozzle-paves-way-for-deep-space-missions/.
+Okugawa, M., Saito, K., Yoshima, H., Sawaizumi, K., Nomoto, S., Watanabe, M., Nakano, T., Koizumi, Y., 2024. Solute segregation in a rapidly solidified Hastelloy-X 
+Ni-based superalloy during laser powder bed fusion investigated by phase-field and computational thermal-fluid dynamics simulations. Addit. Manuf. 84, 104079.
+Pantleon, W., 2008. Resolving the geometrically necessary dislocation content by conventional electron backscattering diffraction. Scr. Mater. 58, 994–997.
+Pedersen, P., 2005. Axisymmetric analytical stiffness matrices with Green-Lagrange strains. Comput. Mech. 35, 227–235.
+Peirce, D., Asaro, R.J., Needleman, A., 1983. Material rate dependence and localized deformation in crystalline solids. Acta Metallurgica 31, 1951–1976.
+Penrose, R., 1955. A generalized inverse for matrices. Math. Proc. Cambridge Philos. Soc. 51, 406–413.
+Permann, C.J., Gaston, D.R., Andrˇs, D., Carlsen, R.W., Kong, F., Lindsay, A.D., Miller, J.M., Peterson, J.W., Slaughter, A.E., Stogner, R.H., Martineau, R.C., 2020. 
+MOOSE: enabling massively parallel multiphysics simulation. SoftwareX. 11, 100430.
+Reed, R.C., 2008. The superalloys: fundamentals and applications. Cambridge university press.
+Rezaei, A., Kermanpur, A., Rezaeian, A., Badrossamay, M., Foroozmehr, E., Sadeghi, F., Han, J., Park, T.M., 2021. Contribution of hot isostatic pressing on 
+densification, microstructure evolution, and mechanical anisotropy of additively manufactured IN718 Ni-based superalloy. Mater. Sci. Eng. 823, 141721.
+Rezaei, A., Rezaeian, A., Kermanpur, A., Badrossamay, M., Foroozmehr, E., Marashi, M., Foroozmehr, A., Han, J., 2020. Microstructural and mechanical anisotropy of 
+selective laser melted IN718 superalloy at room and high temperatures using small punch test. Mater. Charact. 162, 110200.
+Rice, J.R., 1971. Inelastic constitutive relations for solids: an internal-variable theory and its application to metal plasticity. J. Mech. Phys. Solids 19, 433–455.
+Song, W., Yang, J., Liang, J., Lu, N., Zhou, Y., Sun, X., Li, J., 2024. A new approach to design advanced superalloys for additive manufacturing. Addit. Manuf. 84, 
+104098.
+Subeshan, B., Ali, Z., Asmatulu, E., 2024. Metal additive manufacturing in space and aerospace exploration: current processes, material selection and challenges. 
+J. Eng. Appl. Sci. 11, 35.
+Sun, S.-H., Ishimoto, T., Hagihara, K., Tsutsumi, Y., Hanawa, T., Nakano, T., 2019. Excellent mechanical and corrosion properties of austenitic stainless steel with a 
+unique crystallographic lamellar microstructure via selective laser melting. Scr. Mater. 159, 89–93.
+Sun, S., Teng, Q., Xie, Y., Liu, T., Ma, R., Bai, J., Cai, C., Wei, Q., 2021. Two-step heat treatment for laser powder bed fusion of a nickel-based superalloy with 
+simultaneously enhanced tensile strength and ductility. Addit. Manuf. 46, 102168.
+Sun, Z., Sun, B., Soh, V., Lee, C., Lau, D., Wei, F., Silva, A.K.d., Lin, M., Tan, C.C., Wang, P., Ramamurty, U., 2024. Laser powder bed fusion of crack-susceptible 
+stainless maraging steel undergoing solid-state phase transformations. Acta Mater. 263.
+Taller, S., Austin, T., 2022. Using post-processing heat treatments to elucidate precipitate strengthening of additively manufactured superalloy 718. Addit. Manuf. 60, 
+103280.
+Tan, C., Weng, F., Sui, S., Chew, Y., Bi, G., 2021. Progress and perspectives in laser additive manufacturing of key aeroengine materials. Int. J. Mach. Tools Manuf. 
+170.
+Tang, Y.T., Panwisawas, C., Ghoussoub, J.N., Gong, Y., Clark, J.W.G., N´emeth, A.A.N., McCartney, D.G., Reed, R.C., 2021. Alloys-by-design: application to new 
+superalloys for additive manufacturing. Acta Mater. 202, 417–436.
+Toursangsaraki, M., Du, D., Wang, H., Dong, A., 2024. Crystal plasticity quantification of anisotropic tensile and fatigue properties in laser powder bed fused Inconel 
+718 superalloy. Addit. Manuf. 89, 104300.
+Wan, V.V.C., MacLachlan, D.W., Dunne, F.P.E., 2014. A stored energy criterion for fatigue crack nucleation in polycrystals. Int. J. Fatigue 68, 90–102.
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+26
+Z. Zhang et al. International Journal of Plasticity 192 (2025) 104409
+Wang, G., Ouyang, H., Fan, C., Guo, Q., Li, Z., Yan, W., Li, Z., 2020. The origin of high-density dislocations in additively manufactured metals. Mater. Res. Lett. 8, 
+283–290.
+Wang, L., Guo, Q., Chen, L., Yan, W., 2023. In-situ experimental and high-fidelity modeling tools to advance understanding of metal additive manufacturing. Int. J. 
+Mach. Tools Manuf. 193, 104077.
+Wen, Y., Gao, Y., Narayan, R.L., Cai, W., Wang, P., Wei, X., Zhang, B., Ramamurty, U., Qu, X., 2025. Tensile behavior of additively manufactured Inconel 718 and 
+stainless steel 316L with compositionally graded joints. Int. J. Plasticity 189, 104342.
+Wong, S.L., Madivala, M., Prahl, U., Roters, F., Raabe, D., 2016. A crystal plasticity model for twinning- and transformation-induced plasticity. Acta Mater. 118, 
+140–151.
+Xu, Y., 2021. A non-local methodology for geometrically necessary dislocations and application to crack tips. Int. J. Plasticity 140, 102970.
+Xu, L., Chen, H., Jia, Y., Wang, D., Wu, S., Jia, Y., Wang, G., Guo, Z., Xu, Y., 2025. Revealing effects of creep damage on high-temperature fatigue behavior for 
+HfNbTiZr refractory high-entropy alloys: Experimental investigation and crystal-plasticity modelling. J. Mater. Sci. Technol. 231, 134–150.
+Xu, Y., Lu, X., Yang, X., Li, W., Aitken, Z., Vastola, G., Gao, H., Zhang, Y.-W., 2024. Temperature-dependent, multi-mechanism crystal plasticity reveals the 
+deformation and failure behaviour of multi-principal element alloys. J. Mech. Phys. Solids 185, 105549.
+Yin, Y., Li, H., Pan, S., Zhang, J., Han, Q., Yang, S., 2022. Electrochemical behaviour of passivation film formed on SLM-fabricated Hastelloy X superalloy surface in 10 
+wt% NaNO3 solution. Corros. Sci. 206, 110494.
+Yu, C.-H., Peng, R.L., Calmunger, M., Luzin, V., Brodin, H., Moverare, J., 2020. Anisotropic deformation and fracture mechanisms of an additively manufactured Ni￾based superalloy. In: Superalloys 2020: Proceedings of the 14th International Symposium on Superalloys. Springer, pp. 1003–1013.
+Zhai, Y., Su, W., Guo, F., Zheng, X., Yang, B., Wang, Q., Li, Y., Cao, W., Huang, C., 2024. Experimental and numerical investigation of the yield point phenomenon and 
+strain partitioning behavior in a dual-phase steel with lamellar structure. Mater. Sci. Eng. 897, 146356.
+Zhang, X., Liang, Y., Yi, F., Liu, H., Zhou, Q., Yan, Z., Lin, J., 2023a. Anisotropy in microstructure and mechanical properties of additively manufactured Ni-based 
+GH4099 alloy. J. Mater. Res. Technol. 26, 6552–6564.
+Zhang, X., Xu, H., Li, Z., Dong, A., Du, D., Lei, L., Zhang, G., Wang, D., Zhu, G., Sun, B., 2021. Effect of the scanning strategy on microstructure and mechanical 
+anisotropy of Hastelloy X superalloy produced by Laser Powder Bed Fusion. Mater. Charact. 173, 110951.
+Zhang, X., Zhao, J., Kang, G., Zaiser, M., 2023b. Geometrically necessary dislocations and related kinematic hardening in gradient grained materials: a nonlocal 
+crystal plasticity study. Int. J. Plasticity 163, 103553.
+Zhong, H., Shi, Q., Dan, C., You, X., Zong, S., Zhong, S., Zhang, Y., Wang, H., Chen, Z., 2024. Resolving localized geometrically necessary dislocation densities in Al￾Mg polycrystal via in situ EBSD. Acta Mater. 279, 120290.
+Zhou, W., Tian, Y., Tan, Q., Qiao, S., Luo, H., Zhu, G., Shu, D., Sun, B., 2022. Effect of carbon content on the microstructure, tensile properties and cracking 
+susceptibility of IN738 superalloy processed by laser powder bed fusion. Addit. Manuf. 58, 103016.
+Zhou, Z., Li, J., Wang, Y., Mao, Q., Liu, Y., Yue, Y., Huang, C., Li, Y., 2024. Effects of mechanical heterogeneity and dislocation storage capacity on the 
+strength–ductility synergy of heterostructured laminates. Mater. Sci. Eng. 896, 146281.
+Zhu, C., Harrington, T., Livescu, V., Gray, G.T., Vecchio, K.S., 2016. Determination of geometrically necessary dislocations in large shear strain localization in 
+aluminum. Acta Mater. 118, 383–394.
+Zhu, Y., Wu, X., 2023. Heterostructured materials. Prog. Mater. Sci. 131, 101019.
+27

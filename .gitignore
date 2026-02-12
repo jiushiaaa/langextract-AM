@@ -1,0 +1,34 @@
+# 环境与密钥（勿提交）
+.env
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# IDE
+.idea/
+.cursor/
+.vscode/
+*.iml
+
+# 输出（可选：不把抽取结果提交到仓库）
+output/*.jsonl
+
+# 本地参考/子模块（体积大，可按需取消忽略）
+langextract-main/
+
+# 其他
+*.log
+.DS_Store
+Thumbs.db
